@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>비버의 열매 고르기 · 영재교육 포털 연계 예시 화면</title>
+<style>
+  :root{
+    --navy:#14284f; --navy2:#1f3a6e; --ink:#1c2433; --sub:#5b6577; --line:#dfe4ec; --bg:#f4f6fa;
+    --green:#0e7c66; --greenbg:#e8f4f0; --blue:#2f62d4; --bluebg:#eaf0fc; --purple:#6a3fb5; --purplebg:#f1ebfa;
+    --amber:#b56a00; --amberbg:#fdf3df; --red:#c7352b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;font-size:15px;line-height:1.55}
+  header{background:var(--navy);color:#fff;padding:14px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  header h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.2px}
+  header .tag{font-size:12px;border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:2px 10px;color:#dbe4f5}
+  nav{margin-left:auto;display:flex;gap:6px}
+  nav button{background:transparent;border:1px solid rgba(255,255,255,.3);color:#dbe4f5;padding:7px 14px;border-radius:8px;font:inherit;font-size:14px;cursor:pointer}
+  nav button.on{background:#fff;color:var(--navy);border-color:#fff;font-weight:700}
+  main{max-width:1280px;margin:0 auto;padding:20px 28px 40px}
+  section{display:none} section.on{display:block}
+  .who{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .who b{font-size:18px}
+  .chip{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--bluebg);color:var(--blue);font-weight:600;white-space:nowrap}
+  .chip.g{background:var(--greenbg);color:var(--green)} .chip.p{background:var(--purplebg);color:var(--purple)}
+  .chip.a{background:var(--amberbg);color:var(--amber)} .chip.r{background:#fbe9e7;color:var(--red)} .chip.n{background:#eceff4;color:var(--sub)}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:1.15fr 1fr} .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h2{font-size:15px;margin:0 0 10px;color:var(--navy);display:flex;align-items:center;gap:8px}
+  .card h2 small{font-weight:400;color:var(--sub);font-size:12.5px}
+  .sub{color:var(--sub);font-size:13px}
+  .bar{display:grid;grid-template-columns:86px 1fr 74px;align-items:center;gap:10px;margin:9px 0;font-size:13.5px}
+  .track{position:relative;height:16px;background:#eef1f6;border-radius:8px}
+  .band{position:absolute;top:0;bottom:0;background:#cfd9ec;border-radius:8px}
+  .dot{position:absolute;top:-3px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--green);border:3px solid #fff;box-shadow:0 0 0 1px var(--green)}
+  .legend{display:flex;gap:16px;font-size:12.5px;color:var(--sub);margin-top:8px;align-items:center}
+  .legend i{display:inline-block;vertical-align:middle;margin-right:5px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-weight:600;color:var(--sub);text-align:left;border-bottom:1px solid var(--line);padding:6px 6px;font-size:12.5px}
+  td{padding:6px 6px;border-bottom:1px solid #eef1f5;vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  .tries{display:inline-flex;gap:3px}
+  .tries i{width:9px;height:9px;border-radius:2px;background:#e3a39d;display:inline-block}
+  .tries i.ok{background:var(--green)}
+  .sw{appearance:none;width:34px;height:19px;border-radius:999px;background:#cfd5df;position:relative;cursor:pointer;vertical-align:middle;transition:.15s}
+  .sw:checked{background:var(--green)}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;transition:.15s}
+  .sw:checked::after{left:17px}
+  .next{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .next div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fbfcfe}
+  .next b{display:block;font-size:14px;margin:4px 0 2px}
+  .acc{display:flex;gap:10px;flex-wrap:wrap}
+  .acc>div{flex:1;min-width:180px;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .acc>div.off{border-style:dashed;color:var(--sub);background:#fbfcfe}
+  button.btn{font:inherit;font-size:13px;padding:6px 12px;border-radius:8px;border:1px solid var(--navy2);background:#fff;color:var(--navy2);cursor:pointer}
+  button.btn.fill{background:var(--navy2);color:#fff}
+  button.btn:hover{filter:brightness(.96)}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .filters label{font-size:12.5px;color:var(--sub);display:flex;flex-direction:column;gap:3px}
+  select,input[type=range]{font:inherit;font-size:13.5px}
+  select{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;min-width:128px}
+  tr.item{cursor:pointer} tr.item:hover td{background:#f6f8fc} tr.item.sel td{background:var(--bluebg)}
+  .flow{display:flex;gap:6px;align-items:center;font-size:12.5px;margin:10px 0;flex-wrap:wrap}
+  .flow span{padding:3px 10px;border-radius:999px;background:#eceff4;color:var(--sub)}
+  .flow span.done{background:var(--greenbg);color:var(--green);font-weight:600}
+  .flow span.now{background:var(--amberbg);color:var(--amber);font-weight:600}
+  .draft{border:1px dashed #b9c3d6;border-radius:10px;padding:10px 12px;background:#fbfcfe;font-size:13.5px;margin-top:8px}
+  .kv{display:grid;grid-template-columns:92px 1fr;gap:4px 10px;font-size:13.5px}
+  .kv span:nth-child(odd){color:var(--sub)}
+  pre{background:#0f1b33;color:#d7e3ff;border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.5;overflow:auto;margin:8px 0 0;max-height:300px;font-family:Consolas,"D2Coding","Malgun Gothic",monospace}
+  footer{max-width:1280px;margin:0 auto;padding:0 28px 30px;color:var(--sub);font-size:12.5px}
+  .tk{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tk-top{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#eef2f9;border-bottom:1px solid var(--line)}
+  .vers{display:flex;gap:6px}
+  .vers button{font:inherit;font-size:14px;padding:6px 14px;border-radius:8px 8px 0 0;border:1px solid var(--line);border-bottom:3px solid transparent;background:#fff;color:var(--sub);cursor:pointer}
+  .vers button span{color:#c9ced8;letter-spacing:1px;margin-left:2px}
+  .vers button.on{color:var(--navy);font-weight:700;border-bottom-color:var(--navy)}
+  .vers button.ok span,.vers button.on span{color:#f0a400}
+  .vers button em{font-style:normal;font-size:11.5px;font-weight:700;color:var(--green);background:var(--greenbg);border-radius:999px;padding:1px 7px;margin-left:4px}
+  .score{margin-left:auto;font-size:14px;color:var(--sub)} .score b{font-size:20px;color:var(--navy)}
+  .tk-body{display:grid;grid-template-columns:minmax(250px,.72fr) 1.6fr;gap:6px 18px;padding:14px 16px 6px}
+  .stmt p{margin:2px 0 8px;font-size:15px;line-height:1.65}
+  .stmt ul{margin:0 0 12px;padding-left:20px;font-size:14.5px;line-height:1.6} .stmt li{margin:3px 0}
+  .how{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--sub);border-top:1px dashed var(--line);padding-top:10px}
+  .how .k{display:inline-block;min-width:24px;height:24px;line-height:24px;text-align:center;border-radius:50%;background:var(--navy);color:#fff;font-style:normal;font-weight:700;margin-right:6px}
+  .how .k.b{border-radius:999px;background:#fff;color:var(--sub);border:1.5px dashed #8a93a3;padding:0 8px;font-size:12px;line-height:21px}
+  .stage svg{width:100%;height:auto;display:block;touch-action:none;user-select:none}
+  .kn{cursor:grab;outline:none} .kn:focus-visible circle,.bk:focus-visible rect{stroke:#f0a400;stroke-width:3.5}
+  .bk{cursor:pointer;outline:none} .fr{pointer-events:none}
+  .fr.wrong{animation:wob .45s ease-in-out 2;transform-box:fill-box;transform-origin:center}
+  @keyframes wob{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+  .bv{width:34px;height:34px;flex:none}
+  .rule{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:2px 0 4px;padding:8px 12px;border-radius:10px;background:#f4f6fa;font-size:13.5px;color:#3d4658}
+  .rule em{font-style:normal;font-weight:700;color:var(--navy);margin-right:2px}
+  .rule span{white-space:nowrap} .rule b{color:var(--navy)}
+  .rc{font-style:normal;font-weight:700;font-size:12.5px;border-radius:999px;padding:1px 9px;border:1.5px dashed #8a93a3;color:var(--sub);background:#fff}
+  .rc.s{border:1.5px solid #c0354f;color:#9c1f3a;background:#ffd9df} .rc.b{border:1.5px solid #3b5f9b;color:#27477f;background:#d8e4f5}
+  .stmt .rule{margin-top:10px} .stmt .rule span{white-space:normal}
+  .why{border-top:1px solid var(--line);padding:10px 16px 12px;font-size:14px;color:#3d4658}
+  .why summary{cursor:pointer;font-weight:700;color:var(--navy)} .why p{margin:8px 0 0;line-height:1.65}
+  #log td{white-space:nowrap}
+  .stmt #logcard{border:0;border-top:1px dashed var(--line);border-radius:0;padding:10px 0 0;margin-top:4px}
+  .stmt #logcard table{font-size:12.5px} .stmt #logcard h2{font-size:14px;margin-bottom:4px}
+  .tk-bar{display:flex;align-items:center;gap:10px;padding:10px 16px 14px;flex-wrap:wrap}
+  .tk-bar .btn{font-size:14.5px;padding:8px 18px}
+  .btn.go{margin-left:auto;border-color:var(--green);color:var(--green);font-weight:700}
+  .fb{font-size:14.5px;font-weight:600} .fb.good{color:var(--green)} .fb.bad{color:var(--red)} .fb.warn{color:var(--amber)}
+  .shot header,.shot footer,.shot .noshot,.shot .why{display:none}
+  .shot main{padding:14px 16px 16px;max-width:none}
+  .shot{background:#f4f6fa}
+  @media (max-width:980px){.g2,.g3,.next,.tk-body{grid-template-columns:1fr} nav{flex-wrap:wrap} .rule span{white-space:normal} .card{overflow-x:auto} main{padding:14px 14px 30px} header{padding:12px 14px} .tk-top{flex-wrap:wrap} .vers button{padding:6px 10px} nav{margin-left:0}}
+</style>
+</head>
+<body>
+<header>
+  <h1>영재교육종합포털 연계 서비스</h1>
+  <span class="tag">제안용 예시 화면 · 가상 데이터</span>
+  <nav>
+    <button data-t="task" class="on">조작형 과제 · 비버의 열매 고르기</button>
+    <button data-t="student">학생 · 나의 성장</button>
+    <button data-t="bank">교사 · 문제은행</button>
+  </nav>
+</header>
+
+<main>
+<!-- ───────────── 학생 ───────────── -->
+<section id="student">
+  <div class="who">
+    <b>김하늘</b><span class="sub">초등학교 5학년 · 영재교육 경험 없음</span>
+    <span class="chip g">정보·AI 진단 4회 참여</span><span class="chip">선교육 과정 이수 중</span>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h2>개념별 도달 <small>같은 학년에서 같은 진단 과제를 푼 학생들과 견주어 보기</small></h2>
+      <div id="bars"></div>
+      <div class="legend">
+        <span><i style="width:14px;height:14px;border-radius:50%;background:var(--green)"></i>나</span>
+        <span><i style="width:26px;height:10px;border-radius:5px;background:#cfd9ec"></i>같은 학년 가운데 절반이 있는 구간</span>
+        <span>순위는 보여 주지 않습니다</span>
+      </div>
+    </div>
+    <div class="card">
+      <h2>도전 과정 <small>발달기록부에 담을 기록은 내가 고릅니다</small></h2>
+      <table>
+        <thead><tr><th>문항</th><th>개념</th><th>시도</th><th>걸린 기간</th><th>기록부에 담기</th></tr></thead>
+        <tbody id="hist"></tbody>
+      </table>
+      <p class="sub" style="margin:8px 0 0" id="picked"></p>
+    </div>
+  </div>
+
+  <div class="card noshot" style="margin-top:14px">
+    <h2>연결된 학습 공간</h2>
+    <div class="acc">
+      <div><span class="chip g">연결됨</span> <b>BIKO</b><div class="sub">해결 47문항 · 최근 활동 3일 전 · 요약 기록만 받아 옵니다</div></div>
+      <div class="off"><b>다른 온라인 저지</b><div class="sub">아이디를 등록하면 공개된 풀이 기록을 가져옵니다</div><button class="btn" style="margin-top:6px">계정 연결</button></div>
+      <div class="off"><b>과학관·기관 프로그램</b><div class="sub">참여 확인서를 올리면 담당 선생님이 확인합니다</div><button class="btn" style="margin-top:6px">자료 올리기</button></div>
+    </div>
+  </div>
+
+  <div class="grid g2 noshot" style="margin-top:14px">
+    <div class="card">
+      <h2>회차별 변화 <small>진단 과제에서 해결한 문항 수</small></h2>
+      <svg id="trend" viewBox="0 0 460 190" width="100%"></svg>
+      <p class="sub" style="margin:6px 0 0">3회차부터 그래프 문항을 풀기 시작했고, 틀린 문제에 다시 도전한 횟수가 늘었습니다.</p>
+    </div>
+    <div class="card">
+      <h2>다음에 해볼 것</h2>
+      <div class="next" style="grid-template-columns:1fr">
+        <div><span class="chip p">그래프 · 한 단계 위</span><b>한붓그리기</b><span class="sub">지뢰 찾기를 세 번 만에 풀었어요. 같은 개념을 다른 모양으로 만나 봅니다.</span></div>
+        <div><span class="chip">조건 · 다시 보기</span><b>아이템 구매하기 2</b><span class="sub">조건이 두 개 겹칠 때 자주 틀렸어요.</span></div>
+        <div><span class="chip g">프로그램 안내</span><b>지역공동 SW영재학급 선교육</b><span class="sub">4월 2일 시작 · 온라인 · 누구나 신청</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── 교사 ───────────── -->
+<section id="bank">
+  <div class="who">
+    <b>선발도구 문제은행</b><span class="sub">영재학급 담당 교사 화면</span>
+    <span class="chip a">선발용 문항은 시험 시간에만 열립니다</span>
+  </div>
+  <div class="filters">
+    <label>평가영역<select id="f-area"><option value="">전체</option><option>영재성 검사</option><option>창의적 문제해결력</option><option>선교육 과제</option></select></label>
+    <label>학교급<select id="f-level"><option value="">전체</option><option>초등</option><option>중등</option></select></label>
+    <label>측정 역량<select id="f-skill"><option value="">전체</option><option>추상화</option><option>알고리즘 설계</option><option>패턴 인식</option></select></label>
+    <label>문항 형식<select id="f-type"><option value="">전체</option><option>인터랙티브</option><option>코딩</option><option>지필</option></select></label>
+    <label>공개 등급<select id="f-open"><option value="">전체</option><option>공개 연습</option><option>기관 공유</option><option>선발용</option></select></label>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h2>문항 목록 <small id="cnt"></small></h2>
+      <table>
+        <thead><tr><th>문항</th><th>측정 역량</th><th>형식</th><th>난이도</th><th>정답률</th><th>변별도</th><th>등급</th></tr></thead>
+        <tbody id="items"></tbody>
+      </table>
+      <p class="sub" style="margin:8px 0 0">변별도가 0.20보다 낮거나 득점자가 없는 문항은 붉게 표시되어 다음 검토 대상에 올라갑니다.</p>
+    </div>
+    <div class="card" id="detail"></div>
+  </div>
+</section>
+
+<!-- ───────────── 조작형 AI 과제 ───────────── -->
+<section id="task" class="on">
+  <div class="who">
+    <svg class="bv" viewBox="0 0 48 48" aria-hidden="true"><circle cx="11" cy="12" r="6" fill="#7a4a2a"/><circle cx="37" cy="12" r="6" fill="#7a4a2a"/><circle cx="24" cy="25" r="18" fill="#9a6238"/><ellipse cx="24" cy="31" rx="10" ry="8" fill="#f3dcc0"/><circle cx="17" cy="21" r="2.4" fill="#2b1a10"/><circle cx="31" cy="21" r="2.4" fill="#2b1a10"/><ellipse cx="24" cy="27" rx="3.4" ry="2.4" fill="#2b1a10"/><rect x="20.6" y="31" width="3.2" height="5.4" rx="1" fill="#fff" stroke="#c9b08f" stroke-width=".6"/><rect x="24.2" y="31" width="3.2" height="5.4" rx="1" fill="#fff" stroke="#c9b08f" stroke-width=".6"/></svg><b>비버의 열매 고르기</b><span class="sub">코딩 없이 손으로 옮기며 푸는 과제 · AI 원리: 분류 규칙 배우기</span>
+    <span class="chip g">초등 3학년부터</span>
+  </div>
+  <div class="tk">
+    <div class="tk-top">
+      <div class="vers" id="vers"></div>
+      <div class="score">점수 <b id="score">0</b> / 60</div>
+    </div>
+    <div class="tk-body">
+      <div class="stmt">
+        <p id="story"></p>
+        <ul id="todo"></ul>
+        <div class="how">
+          <span><i class="k">↔</i> 세로 칸막이를 좌우로 끌기</span>
+          <span id="how-b"><i class="k">↕</i> 가로 칸막이를 위아래·좌우로 끌기</span>
+          <span><i class="k b">바구니</i> 눌러서 바꾸기</span>
+        </div>
+      </div>
+      <div class="stage"><svg id="st" viewBox="0 0 660 436" role="img" aria-label="열매가 놓인 판과 칸막이"></svg>
+        <div class="rule" id="rule"></div></div>
+    </div>
+    <div class="tk-bar">
+      <button class="btn fill" id="check">검사하기</button>
+      <button class="btn" id="reset">처음부터 다시</button>
+      <span id="fb" class="fb"></span>
+      <button class="btn go" id="next" hidden>더 어려운 단계로</button>
+    </div>
+    <details class="why">
+      <summary>이 과제에 담긴 AI 원리</summary>
+      <p>칸막이를 놓는 일은 “크기가 4보다 큰가?” 같은 질문을 정하는 일입니다. 질문을 차례로 던져 자료를 나누는 방법을 <b>결정 트리</b>라고 합니다. AI도 이렇게 미리 맛본 열매(학습 자료)에서 가장 덜 틀리는 질문을 찾아 규칙을 만듭니다.</p>
+      <p>별난 열매까지 모두 맞히려고 규칙을 계속 복잡하게 만들면, 처음 보는 열매에서는 오히려 더 많이 틀릴 수 있습니다. 그래서 규칙을 만든 뒤에는 새 열매(시험 자료)로 확인합니다.</p>
+    </details>
+  </div>
+
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card" id="logcard">
+      <h2>풀이 과정 <small>답과 함께 푼 과정이 남습니다</small></h2>
+      <table>
+        <thead><tr><th>단계</th><th>검사</th><th>바꾼 횟수</th><th>걸린 시간</th><th>결과</th></tr></thead>
+        <tbody id="log"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h2>활동 기록 카드 <small>학생이 누르면 포털로 보내는 요약</small></h2>
+      <button class="btn fill" id="mk">기록 카드 만들기</button>
+      <pre id="json">{ }</pre>
+    </div>
+  </div>
+</section>
+</main>
+<footer>화면 속 이름·수치는 모두 가상으로 만든 예시입니다. 문항 제목은 BIKO(biko.kr)에 공개된 문항에서 가져왔습니다.</footer>
+
+<script>
+/* ── 탭 ── */
+const tabs=[...document.querySelectorAll('nav button')];
+function show(t){tabs.forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===t)); }
+tabs.forEach(b=>b.onclick=()=>{history.replaceState(null,'','#'+b.dataset.t);show(b.dataset.t)});
+
+/* ── 학생 화면 ── */
+const concepts=[['순차·반복',82,[48,78]],['조건',58,[45,74]],['자료 다루기',71,[40,70]],['그래프',64,[22,52]],['규칙 찾기',88,[50,80]],['탐색·최적화',36,[18,46]]];
+document.getElementById('bars').innerHTML=concepts.map(([n,v,[a,b]])=>{
+  const pos=v>b?'위쪽 구간':v<a?'아래쪽 구간':'가운데 구간';
+  return `<div class="bar"><span>${n}</span><div class="track"><div class="band" style="left:${a}%;width:${b-a}%"></div><div class="dot" style="left:${v}%"></div></div><span class="sub">${pos}</span></div>`}).join('');
+(function(){const d=[[1,6,1],[2,9,2],[3,13,6],[4,17,9]],W=460,H=190,x=i=>60+(i-1)*118,y=v=>160-v*7;
+  let s='';for(let g=0;g<=20;g+=5)s+=`<line x1="44" x2="${W-14}" y1="${y(g)}" y2="${y(g)}" stroke="#e6eaf1"/><text x="36" y="${y(g)+4}" font-size="11" fill="#7b8596" text-anchor="end">${g}</text>`;
+  const path=k=>d.map((p,i)=>(i?'L':'M')+x(p[0])+' '+y(p[k])).join(' ');
+  s+=`<path d="${path(1)}" fill="none" stroke="#0e7c66" stroke-width="3"/><path d="${path(2)}" fill="none" stroke="#6a3fb5" stroke-width="2.5" stroke-dasharray="5 4"/>`;
+  d.forEach(p=>{s+=`<circle cx="${x(p[0])}" cy="${y(p[1])}" r="5" fill="#0e7c66"/><text x="${x(p[0])}" y="${y(p[1])-10}" font-size="12" font-weight="700" fill="#0e7c66" text-anchor="middle">${p[1]}</text>
+   <circle cx="${x(p[0])}" cy="${y(p[2])}" r="4" fill="#6a3fb5"/><text x="${x(p[0])}" y="183" font-size="11.5" fill="#5b6577" text-anchor="middle">${p[0]}회 (${['3월','5월','9월','11월'][p[0]-1]})</text>`});
+  s+=`<line x1="56" x2="80" y1="7" y2="7" stroke="#0e7c66" stroke-width="3"/><text x="86" y="11" font-size="11.5" fill="#0e7c66">해결한 문항</text><line x1="170" x2="194" y1="7" y2="7" stroke="#6a3fb5" stroke-width="2.5" stroke-dasharray="5 4"/><text x="200" y="11" font-size="11.5" fill="#6a3fb5">다시 도전한 횟수</text>`;
+  document.getElementById('trend').innerHTML=s})();
+const hist=[['지뢰 찾기','그래프',[0,0,1],'2일',true],['게임','탐색·최적화',[0,0,0,0,0,1],'9일',true],['격자판 장식하기','규칙 찾기',[1],'하루',false],['아이템 만들기','탐색·최적화',[0,0,0],'풀이 중',false],['열매 고르기 ★★★','분류 규칙',[0,0,0,0,1],'하루',false]];
+function renderHist(){document.getElementById('hist').innerHTML=hist.map((h,i)=>`<tr><td><b>${h[0]}</b></td><td>${h[1]}</td><td><span class="tries">${h[2].map(o=>`<i class="${o?'ok':''}"></i>`).join('')}</span> ${h[2].length}번</td><td>${h[3]}</td><td><input type="checkbox" class="sw" data-i="${i}" ${h[4]?'checked':''}></td></tr>`).join('');
+  const n=hist.filter(h=>h[4]).length;document.getElementById('picked').textContent=`고른 기록 ${n}건은 담당 선생님이 확인한 뒤 발달기록부의 활동 근거로 붙습니다.`;
+  document.querySelectorAll('#hist .sw').forEach(c=>c.onchange=()=>{hist[c.dataset.i][4]=c.checked;renderHist()})}
+renderHist();
+
+/* ── 문제은행 ── */
+const bank=[
+ {t:'숫자 카드',area:'선교육 과제',level:'초등',skill:'패턴 인식',type:'인터랙티브',diff:'하',p:.81,d:.34,open:'공개 연습',use:'2024·2025 선교육',st:3},
+ {t:'격자판 장식하기',area:'영재성 검사',level:'초등',skill:'패턴 인식',type:'인터랙티브',diff:'중',p:.52,d:.47,open:'기관 공유',use:'2025 기출',st:3},
+ {t:'지뢰 찾기',area:'창의적 문제해결력',level:'초등',skill:'추상화',type:'인터랙티브',diff:'중',p:.44,d:.52,open:'기관 공유',use:'2025 기출',st:3},
+ {t:'아이템 만들기',area:'창의적 문제해결력',level:'초등',skill:'알고리즘 설계',type:'인터랙티브',diff:'상',p:.21,d:.38,open:'기관 공유',use:'2024 기출',st:3},
+ {t:'열매 고르기',area:'선교육 과제',level:'초등',skill:'패턴 인식',type:'인터랙티브',diff:'하~상',p:.63,d:.45,open:'공개 연습',use:'2026 진단 과제',st:3},
+ {t:'최대공약수',area:'선교육 과제',level:'중등',skill:'알고리즘 설계',type:'코딩',diff:'중',p:.58,d:.44,open:'공개 연습',use:'2025 선교육',st:3},
+ {t:'(예시 문항 B-2)',area:'영재성 검사',level:'초등',skill:'추상화',type:'지필',diff:'상',p:.03,d:.08,open:'기관 공유',use:'2024 기출',st:1},
+ {t:'(2027 선발 문항 A-3)',area:'영재성 검사',level:'초등',skill:'추상화',type:'지필',diff:'–',p:null,d:null,open:'선발용',use:'미사용',st:2},
+];
+let sel=2;
+const F=['area','level','skill','type','open'];
+function fmt(v){return v==null?'–':v.toFixed(2)}
+function renderBank(){
+  const f=Object.fromEntries(F.map(k=>[k,document.getElementById('f-'+k).value]));
+  const rows=bank.map((b,i)=>[b,i]).filter(([b])=>F.every(k=>!f[k]||b[k]===f[k]));
+  document.getElementById('cnt').textContent=`${rows.length}건`;
+  document.getElementById('items').innerHTML=rows.map(([b,i])=>{
+    const bad=b.d!=null&&b.d<.2;const oc=b.open==='공개 연습'?'g':b.open==='선발용'?'r':'';
+    return `<tr class="item ${i===sel?'sel':''}" data-i="${i}"><td><b>${b.t}</b></td><td>${b.skill}</td><td>${b.type}</td><td>${b.diff}</td><td>${fmt(b.p)}</td><td style="${bad?'color:var(--red);font-weight:700':''}">${fmt(b.d)}</td><td><span class="chip ${oc}">${b.open}</span></td></tr>`}).join('');
+  document.querySelectorAll('#items tr').forEach(r=>r.onclick=()=>{sel=+r.dataset.i;renderBank()});
+  renderDetail();
+}
+const steps=['초안','교사 검토','전문가 검증','등록'];
+function renderDetail(){
+  const b=bank[sel], lock=b.open==='선발용';
+  const flow=steps.map((s,i)=>`<span class="${i<b.st?'done':i===b.st?'now':''}">${s}</span>`).join('→');
+  let body;
+  if(lock){body=`<p class="sub">선발용 문항은 내용이 가려져 있습니다. 기관이 정한 시험 시간에 응시 화면에서만 열리고, 열람한 사람과 시각이 기록됩니다.</p>`}
+  else{body=`<div class="kv"><span>평가영역</span><span>${b.area}</span><span>학교급</span><span>${b.level}</span><span>측정 역량</span><span>${b.skill}</span><span>채점</span><span>${b.type==='지필'?'채점 기준표에 따라 교사 채점':'자동 채점 · 조작 과정 저장'}</span><span>사용 이력</span><span>${b.use}</span><span>문항 통계</span><span>정답률 ${fmt(b.p)} · 변별도 ${fmt(b.d)}${b.d<.2?' <span class="chip r">검토 필요</span>':''}</span></div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn fill" id="var">닮은 문항 초안 만들기</button><button class="btn" id="rub">채점 기준 초안 만들기</button><button class="btn">우리 기관 시험지에 담기</button></div>
+    <div id="out"></div>`}
+  document.getElementById('detail').innerHTML=`<h2>${b.t} <small>${b.area} · ${b.level}</small></h2><div class="flow">${flow}</div>${body}`;
+  if(!lock){
+    document.getElementById('var').onclick=()=>{const fx=document.body.classList.contains('shot'),n=fx?5:3+Math.floor(Math.random()*4),m=fx?7:n+2+Math.floor(Math.random()*3);
+      document.getElementById('out').innerHTML=`<div class="draft"><span class="chip a">AI 초안 · 검토 전</span> <b style="margin-left:4px">${b.t} (변형 ${fx?'A':String.fromCharCode(65+Math.floor(Math.random()*3))})</b><br>격자 크기를 ${n}×${m}로, 등장 소재를 ‘보물 지도’로 바꾸었습니다. 풀이 구조와 측정 역량(${b.skill})은 원문항과 같습니다.<br><span class="sub">교사 검토 → 전문가 검증을 거쳐야 문제은행에 등록됩니다. 등록 뒤에도 ‘AI 초안에서 출발’ 표시가 남습니다.</span></div>`};
+    document.getElementById('rub').onclick=()=>{document.getElementById('out').innerHTML=`<div class="draft"><span class="chip a">AI 초안 · 검토 전</span> <b style="margin-left:4px">채점 기준(안)</b><br>① 규칙을 찾아 표현함 (2점) ② 규칙을 새 상황에 적용함 (2점) ③ 더 나은 방법이 있는지 견주어 설명함 (1점)<br><span class="sub">배점과 문구는 담당 교사가 고쳐 확정합니다.</span></div>`};
+  }
+}
+F.forEach(k=>document.getElementById('f-'+k).onchange=renderBank);renderBank();
+
+/* ── 조작형 AI 과제: 비버의 열매 고르기 ── */
+const NS='http://www.w3.org/2000/svg',st=document.getElementById('st');
+const X0=66,X1=642,Y0=44,Y1=344,CW=(X1-X0)/8,RH=(Y1-Y0)/6;
+const SHADE=['#ffeeb5','#ffd978','#ffbb55','#f79440','#e46a35','#c8452c'];
+const FR=(x,y,s)=>({x,y,s});
+const LV=[
+ {name:'쉬움',star:1,pt:10,two:false,
+  story:'비버 마을의 로봇이 열매를 나누어 담으려고 합니다. 로봇은 맛을 볼 수 없고 열매의 <b>크기</b>만 잴 수 있습니다. 비버들이 먼저 맛본 열매에는 웃는 얼굴(단 열매)과 찡그린 얼굴(쓴 열매)이 그려져 있습니다.',
+  todo:['세로 칸막이를 옮겨 판을 둘로 나누세요.','칸마다 바구니를 정해 주세요.','모든 열매가 맞는 바구니에 들어가면 성공입니다.'],
+  fruits:[FR(1,2,0),FR(2,5,0),FR(2,3,0),FR(3,1,0),FR(4,4,0),FR(4,6,0),FR(5,2,1),FR(6,5,1),FR(6,3,1),FR(7,1,1),FR(8,4,1)]},
+ {name:'보통',star:2,pt:20,two:true,
+  story:'이번에는 크기만으로는 나눌 수 없습니다. 로봇이 <b>크기</b>를 먼저 재고, 한쪽 열매는 <b>색이 진한지</b> 한 번 더 살펴보게 해 주세요.',
+  todo:['세로 칸막이로 먼저 나눕니다.','가로 칸막이는 왼쪽이나 오른쪽 가운데 한쪽에만 놓을 수 있습니다.','세 칸의 바구니를 정하고 검사하세요.'],
+  fruits:[FR(1,5,0),FR(2,2,0),FR(2,6,0),FR(3,4,0),FR(3,1,0),FR(4,1,0),FR(5,2,0),FR(6,1,0),FR(7,2,0),FR(8,1,0),FR(4,4,1),FR(4,6,1),FR(5,3,1),FR(5,5,1),FR(6,4,1),FR(7,6,1),FR(7,3,1),FR(8,5,1)]},
+ {name:'어려움',star:3,pt:30,two:true,
+  story:'숲에서 새로 따 온 열매에는 <b>별난 열매</b>가 섞여 있습니다. 칸막이 두 개로는 모두 맞힐 수 없을지도 모릅니다. <b>틀리는 열매가 가장 적은</b> 규칙을 찾아 주세요.',
+  todo:['칸막이 두 개와 바구니 세 개를 정합니다.','잘못 담기는 열매 수를 가장 적게 만들면 성공입니다.','성공하면 로봇이 처음 보는 열매로 규칙을 시험합니다.'],
+  fruits:[FR(8,5,0),FR(8,2,0),FR(7,6,0),FR(6,4,0),FR(6,1,0),FR(5,1,0),FR(4,2,0),FR(3,1,0),FR(2,2,0),FR(1,1,0),FR(5,4,1),FR(5,6,1),FR(4,3,1),FR(4,5,1),FR(3,4,1),FR(2,6,1),FR(2,3,1),FR(1,5,1),FR(7,3,1),FR(3,6,0),FR(1,3,0)],
+  test:[FR(4,6,1),FR(1,4,1),FR(3,2,0),FR(7,4,0),FR(5,5,1),FR(8,1,0),FR(6,6,0),FR(2,5,1)]}
+];
+const fresh=()=>({a:1,b:1,side:'R',bask:{},checked:null});
+let lv=0,S=LV.map(fresh),LOG=LV.map(()=>({checks:0,moves:0,t0:null,sec:null,ok:false,best:null}));
+const el=(n,a={},t)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;return e};
+const fx=x=>X0+(x-.5)*CW,fy=y=>Y1-(y-.5)*RH,lineX=s=>X0+s.a*CW,lineY=s=>Y1-s.b*RH;
+function regionOf(f,s,two){const side=f.x<=s.a?'L':'R';if(!two)return side;return side!==s.side?'O':(f.y>s.b?'T':'B')}
+const regions=two=>two?['O','T','B']:['L','R'];
+function errorsOf(fruits,s,two){return fruits.filter(f=>s.bask[regionOf(f,s,two)]!==f.s)}
+/* 가능한 모든 규칙을 따져 가장 적게 틀리는 수를 구한다 */
+function optimum(L){let best=1e9;const keys=regions(L.two);
+  for(let a=1;a<=7;a++)for(let b=1;b<=(L.two?5:1);b++)for(const side of(L.two?['L','R']:['R']))for(let m=0;m<1<<keys.length;m++){
+    const s={a,b,side,bask:{}};keys.forEach((k,i)=>s.bask[k]=m>>i&1);best=Math.min(best,errorsOf(L.fruits,s,L.two).length)}
+  return best}
+LV.forEach(L=>L.opt=optimum(L));
+
+function fruit(f,wrong,isNew){const g=el('g',{class:'fr'+(wrong?' wrong':'')}),r=11.5+f.x*1.45,cx=fx(f.x),cy=fy(f.y);
+  if(wrong)g.append(el('circle',{cx,cy,r:r+6,fill:'none',stroke:'#d92d20','stroke-width':3}));
+  if(isNew)g.append(el('circle',{cx,cy,r:r+5,fill:'none',stroke:'#14284f','stroke-width':2,'stroke-dasharray':'4 3'}));
+  if(f.s)g.append(el('path',{d:`M${cx} ${cy-r+1} q7 -11 15 -7 q-3 9 -15 7z`,fill:'#3c9a4a'}));
+  g.append(el('circle',{cx,cy,r,fill:SHADE[f.y-1],stroke:'#8a4b1f','stroke-width':1.4}));
+  const ink='#3a1c0c',ex=r*.34,ey=cy-r*.16;
+  g.append(el('circle',{cx:cx-ex,cy:ey,r:r*.1,fill:ink}),el('circle',{cx:cx+ex,cy:ey,r:r*.1,fill:ink}));
+  const my=cy+r*.3,mw=r*.38;
+  g.append(el('path',{d:f.s?`M${cx-mw} ${my} q${mw} ${r*.42} ${mw*2} 0`:`M${cx-mw} ${my+r*.16} q${mw} ${-r*.4} ${mw*2} 0`,fill:'none',stroke:ink,'stroke-width':Math.max(1.6,r*.11),'stroke-linecap':'round'}));
+  return g}
+function basket(key,x,y){const s=S[lv],v=s.bask[key],w=104,g=el('g',{class:'bk',tabindex:0,role:'button','aria-label':'바구니 바꾸기'});
+  g.append(el('rect',{x:x-w/2,y:y-13,width:w,height:26,rx:13,fill:v==null?'#fff':v?'#ffd9df':'#d8e4f5',stroke:v==null?'#8a93a3':v?'#c0354f':'#3b5f9b','stroke-width':1.6,'stroke-dasharray':v==null?'5 3':'none'}));
+  g.append(el('text',{x,y:y+4.5,'text-anchor':'middle','font-size':13,'font-weight':700,fill:v==null?'#5b6577':v?'#9c1f3a':'#27477f'},v==null?'바구니 고르기':v?'단 열매 바구니':'쓴 열매 바구니'));
+  const flip=()=>{touch();s.bask[key]=v==null?1:1-v;LOG[lv].moves++;s.checked=null;draw()};
+  g.onclick=flip;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}};return g}
+let drag=null;
+function knob(x,y,ch,kind){const g=el('g',{class:'kn',tabindex:0,role:'slider','data-k':kind,'aria-label':kind==='a'?'세로 칸막이':'가로 칸막이'});
+  g.append(el('circle',{cx:x,cy:y,r:14,fill:'#14284f',stroke:'#fff','stroke-width':2.5}),el('text',{x,y:y+5.5,'text-anchor':'middle','font-size':16,'font-weight':700,fill:'#fff'},ch));
+  g.onpointerdown=e=>{e.preventDefault();const s=S[lv];touch();drag={kind,before:JSON.stringify([s.a,s.b,s.side])}};
+  g.onkeydown=e=>{const s=S[lv],d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(!d)return;e.preventDefault();touch();
+    if(kind==='a')s.a=Math.max(1,Math.min(7,s.a+d[0]));else{s.b=Math.max(1,Math.min(5,s.b+d[1]));if(d[0])s.side=d[0]<0?'L':'R'}
+    LOG[lv].moves++;s.checked=null;draw();st.querySelector('.kn[data-k="'+kind+'"]').focus()};
+  return g}
+addEventListener('pointermove',e=>{if(!drag)return;const s=S[lv],p=new DOMPoint(e.clientX,e.clientY).matrixTransform(st.getScreenCTM().inverse()),was=JSON.stringify([s.a,s.b,s.side]);
+  if(drag.kind==='a')s.a=Math.max(1,Math.min(7,Math.round((p.x-X0)/CW)));
+  else{s.b=Math.max(1,Math.min(5,Math.round((Y1-p.y)/RH)));s.side=p.x<lineX(s)?'L':'R'}
+  if(JSON.stringify([s.a,s.b,s.side])!==was){s.checked=null;draw()}});
+addEventListener('pointerup',()=>{if(!drag)return;const s=S[lv];if(JSON.stringify([s.a,s.b,s.side])!==drag.before){LOG[lv].moves++;ui()}drag=null});
+function touch(){const g=LOG[lv];if(g.t0==null)g.t0=Date.now()}
+
+function draw(){const L=LV[lv],s=S[lv],lx=lineX(s),ly=lineY(s);st.replaceChildren();
+  const add=(...n)=>st.append(...n);
+  const tint=k=>s.bask[k]==null?'#f5f6f9':s.bask[k]?'#fff0f2':'#edf3fb';
+  const bl=s.side==='L';
+  if(L.two){
+    add(el('rect',{x:bl?lx:X0,y:Y0,width:bl?X1-lx:lx-X0,height:Y1-Y0,fill:tint('O')}),
+        el('rect',{x:bl?X0:lx,y:Y0,width:bl?lx-X0:X1-lx,height:ly-Y0,fill:tint('T')}),
+        el('rect',{x:bl?X0:lx,y:ly,width:bl?lx-X0:X1-lx,height:Y1-ly,fill:tint('B')}));
+  }else add(el('rect',{x:X0,y:Y0,width:lx-X0,height:Y1-Y0,fill:tint('L')}),el('rect',{x:lx,y:Y0,width:X1-lx,height:Y1-Y0,fill:tint('R')}));
+  for(let i=1;i<8;i++)add(el('line',{x1:X0+i*CW,x2:X0+i*CW,y1:Y0,y2:Y1,stroke:'#e2e6ee'}));
+  for(let j=1;j<6;j++)add(el('line',{x1:X0,x2:X1,y1:Y0+j*RH,y2:Y0+j*RH,stroke:'#e2e6ee'}));
+  add(el('rect',{x:X0,y:Y0,width:X1-X0,height:Y1-Y0,fill:'none',stroke:'#8b95a7','stroke-width':1.5}));
+  for(let i=1;i<=8;i++)add(el('text',{x:fx(i),y:Y1+15,'text-anchor':'middle','font-size':11.5,fill:'#7b8596'},i));
+  for(let j=1;j<=6;j++)add(el('text',{x:X0-8,y:fy(j)+4,'text-anchor':'end','font-size':11.5,fill:'#7b8596'},j));
+  add(el('text',{x:(X0+X1)/2,y:429,'text-anchor':'middle','font-size':13.5,fill:'#3d4658'},'크기    작다  →  크다'));
+  add(el('text',{x:0,y:0,'text-anchor':'middle','font-size':13.5,fill:'#3d4658',transform:`translate(22 ${(Y0+Y1)/2}) rotate(-90)`},'색    연하다  →  진하다'));
+  const done=s.checked==='done',wrong=done?errorsOf(L.fruits,s,L.two):[];
+  L.fruits.forEach(f=>add(fruit(f,wrong.includes(f))));
+  if(done&&LOG[lv].ok&&L.test&&wrong.length<=L.opt)L.test.forEach(f=>add(fruit(f,s.bask[regionOf(f,s,true)]!==f.s,true)));
+  add(el('line',{x1:lx,x2:lx,y1:Y0-6,y2:Y1+6,stroke:'#14284f','stroke-width':4,'stroke-linecap':'round'}));
+  if(L.two)add(el('line',{x1:bl?X0-6:lx,x2:bl?lx:X1+6,y1:ly,y2:ly,stroke:'#14284f','stroke-width':4,'stroke-linecap':'round'}));
+  /* 바구니: 가로 칸막이가 있는 쪽은 위·아래, 없는 쪽은 아래 */
+  const mid=(a,b)=>Math.max(X0+52,Math.min(X1-52,(a+b)/2));
+  if(L.two){const bx=bl?mid(X0,lx):mid(lx,X1),ox=bl?mid(lx,X1):mid(X0,lx);
+    add(basket('T',bx,Y0-22),basket('B',bx,Y1+40),basket('O',ox,Y1+40));
+  }else add(basket('L',mid(X0,lx),Y1+40),basket('R',mid(lx,X1),Y1+40));
+  add(knob(lx,L.two&&Math.abs(ly-(Y0+RH*3))<1?Y0+RH*2:Y0+RH*3,'↔','a'));
+  if(L.two){const lo=bl?0:s.a,hi=bl?s.a:8,gx=hi-lo>1?Math.round((lo+hi)/2):(lo+hi)/2;add(knob(X0+gx*CW,ly,'↕','b'))}
+  ui()}
+
+function ui(){const L=LV[lv],s=S[lv],g=LOG[lv];
+  document.getElementById('vers').innerHTML=LV.map((v,i)=>`<button class="${i===lv?'on':''} ${LOG[i].ok?'ok':''}" data-v="${i}">${v.name} <span>${'★'.repeat(v.star)}</span>${LOG[i].ok?' <em>성공</em>':''}</button>`).join('');
+  document.querySelectorAll('#vers button').forEach(b=>b.onclick=()=>{lv=+b.dataset.v;draw()});
+  document.getElementById('score').textContent=LV.reduce((a,v,i)=>a+(LOG[i].ok?v.pt:0),0);
+  document.getElementById('story').innerHTML=L.story;
+  document.getElementById('todo').innerHTML=L.todo.map(t=>`<li>${t}</li>`).join('');
+  document.getElementById('how-b').style.display=L.two?'':'none';
+  const chip=k=>s.bask[k]==null?'<i class="rc">바구니 ?</i>':s.bask[k]?'<i class="rc s">단 열매</i>':'<i class="rc b">쓴 열매</i>',big=`크기가 <b>${s.a}</b>보다 크면`,small=`크기가 <b>${s.a}</b> 이하이면`;
+  let rule;if(!L.two)rule=`<span>${small} ${chip('L')}</span><span>${big} ${chip('R')}</span>`;
+  else{const mine=s.side==='L'?small:big,other=s.side==='L'?big:small;
+    rule=`<span>${other} ${chip('O')}</span><span>${mine} → 색이 <b>${s.b}</b>보다 진하면 ${chip('T')} 아니면 ${chip('B')}</span>`}
+  document.getElementById('rule').innerHTML='<em>로봇의 규칙</em>'+rule;
+  const fb=document.getElementById('fb'),nx=document.getElementById('next');nx.hidden=true;fb.className='fb';fb.textContent='';
+  if(s.checked){const n=errorsOf(L.fruits,s,L.two).length;
+    if(s.checked==='need'){fb.textContent='바구니를 모두 정한 다음 검사하세요.';fb.classList.add('warn')}
+    else if(n<=L.opt){fb.classList.add('good');
+      if(L.test){const hit=L.test.filter(f=>s.bask[regionOf(f,s,true)]===f.s).length;
+        fb.innerHTML=`성공! 가장 적게 틀리는 규칙입니다(별난 열매 ${n}개). 로봇이 처음 보는 열매(점선) ${L.test.length}개 가운데 <b>${hit}개</b>를 맞혔습니다.`}
+      else fb.textContent='성공! 로봇이 모든 열매를 바르게 담았습니다.';
+      if(lv<LV.length-1)nx.hidden=false}
+    else{fb.classList.add('bad');fb.textContent=`빨간 테두리 열매 ${n}개가 잘못 담겼습니다.`+(L.opt>0?(g.checks>=3?' 모두 맞히는 규칙은 없습니다. 더 적게 틀리는 규칙을 찾아보세요.':' 더 적게 틀리는 규칙이 있습니다.'):' 칸막이나 바구니를 바꾸어 보세요.')}}
+  document.getElementById('log').innerHTML=LV.map((v,i)=>{const q=LOG[i],t=q.sec!=null?q.sec:q.t0?Math.round((Date.now()-q.t0)/1000):null;
+    return `<tr><td><b>${v.name}</b> ${'★'.repeat(v.star)}</td><td>${q.checks}번</td><td>${q.moves}번</td><td>${t==null?'–':t<60?t+'초':Math.floor(t/60)+'분 '+t%60+'초'}</td><td>${q.ok?'<span class="chip g">성공</span>':q.checks?'<span class="chip a">푸는 중'+(q.best!=null&&v.opt?` · 가장 적게 틀린 수 ${q.best}`:'')+'</span>':'<span class="chip n">시작 전</span>'}</td></tr>`}).join('')}
+
+function check(){const L=LV[lv],s=S[lv],g=LOG[lv];touch();
+  if(regions(L.two).some(k=>s.bask[k]==null)){s.checked='need';draw();return}
+  g.checks++;const n=errorsOf(L.fruits,s,L.two).length;g.best=g.best==null?n:Math.min(g.best,n);s.checked='done';
+  if(n<=L.opt&&!g.ok){g.ok=true;g.sec=Math.round((Date.now()-g.t0)/1000)}
+  draw()}
+document.getElementById('check').onclick=check;
+document.getElementById('reset').onclick=()=>{S[lv]=fresh();draw()};
+document.getElementById('next').onclick=()=>{lv=Math.min(LV.length-1,lv+1);draw()};
+document.getElementById('mk').onclick=()=>{const NL=String.fromCharCode(10),r={};
+  LV.forEach((v,i)=>{const q=LOG[i];r[v.name]={성공:q.ok,검사:q.checks,바꾼_횟수:q.moves,걸린_시간_초:q.sec}});
+  const card={actor:'포털 통합 학생 ID(가명 처리)',verb:LOG.every(q=>q.ok)?'completed':'attempted',object:'비버의 열매 고르기',
+    result:r,context:{영역:'AI 원리 · 분류 규칙',형식:'조작형 과제'},보내는_범위:'요약 수치만 (이름·화면 기록 제외)',
+    timestamp:document.body.classList.contains('shot')?'2027-05-12T10:40':new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,16)};
+  const line=(k,v)=>'  "'+k+'": '+JSON.stringify(v).replace(/,"/g,', "').replace(/":/g,'": ');
+  document.getElementById('json').textContent='{'+NL+Object.entries(card).map(([k,v])=>k==='result'?'  "result": {'+NL+Object.entries(v).map(([a,b])=>'  '+line(a,b)).join(','+NL)+NL+'  }':line(k,v)).join(','+NL)+NL+'}'};
+
+/* 그림 캡처용: 세 단계를 푼 모습을 미리 만들어 둔다 */
+function demo(){const now=Date.now();
+  S[0]={a:4,b:1,side:'R',bask:{L:0,R:1},checked:'done'};LOG[0]={checks:1,moves:3,t0:now-41e3,sec:41,ok:true,best:0};
+  S[1]={a:3,b:2,side:'R',bask:{O:0,T:1,B:0},checked:'done'};LOG[1]={checks:3,moves:9,t0:now-132e3,sec:132,ok:true,best:0};
+  S[2]={a:5,b:2,side:'L',bask:{O:0,T:1,B:0},checked:'done'};LOG[2]={checks:5,moves:14,t0:now-268e3,sec:268,ok:true,best:LV[2].opt};
+  lv=2;draw();document.getElementById('mk').click();
+  if(document.body.classList.contains('shot')){const c=document.getElementById('logcard'),g=c.parentElement;document.querySelector('.how').replaceWith(c);g.remove();document.querySelector('.stmt').append(document.getElementById('rule'))}}
+
+/* 주소 뒤 #student / #bank / #task 로 바로 열기 */
+const h=location.hash.slice(1).split('-');const shot=h[0]==='shot';if(shot){document.body.classList.add('shot');h.shift()}
+draw();
+show(['student','bank','task'].includes(h[0])?h[0]:'task');
+if(shot&&h[0]==='bank'){renderBank();document.getElementById('var').click()}
+if(shot&&h[0]==='task')demo();
+scrollTo(0,0);
+</script>
+</body>
+</html>
