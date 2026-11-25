@@ -96,9 +96,10 @@
   .rule{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:2px 0 4px;padding:8px 12px;border-radius:10px;background:#f4f6fa;font-size:13.5px;color:#3d4658}
   .rule em{font-style:normal;font-weight:700;color:var(--navy);margin-right:2px}
   .rule span{white-space:nowrap} .rule b{color:var(--navy)}
-  .rc{font-style:normal;font-weight:700;font-size:12.5px;border-radius:999px;padding:1px 9px;border:1.5px dashed #8a93a3;color:var(--sub);background:#fff}
+  .rc{display:inline-block;white-space:nowrap;font-style:normal;font-weight:700;font-size:12.5px;border-radius:999px;padding:1px 9px;border:1.5px dashed #8a93a3;color:var(--sub);background:#fff}
   .rc.s{border:1.5px solid #c0354f;color:#9c1f3a;background:#ffd9df} .rc.b{border:1.5px solid #3b5f9b;color:#27477f;background:#d8e4f5}
-  .stmt .rule{margin-top:10px} .stmt .rule span{white-space:normal}
+  .stmt .rule{margin:6px 0 12px;flex-direction:column;align-items:flex-start} .stmt .rule span{white-space:normal}
+  .shot #todo{display:none}
   .why{border-top:1px solid var(--line);padding:10px 16px 12px;font-size:14px;color:#3d4658}
   .why summary{cursor:pointer;font-weight:700;color:var(--navy)} .why p{margin:8px 0 0;line-height:1.65}
   #log td{white-space:nowrap}
@@ -467,7 +468,7 @@ function demo(){const now=Date.now();
   S[1]={a:3,b:2,side:'R',bask:{O:0,T:1,B:0},checked:'done'};LOG[1]={checks:3,moves:9,t0:now-132e3,sec:132,ok:true,best:0};
   S[2]={a:5,b:2,side:'L',bask:{O:0,T:1,B:0},checked:'done'};LOG[2]={checks:5,moves:14,t0:now-268e3,sec:268,ok:true,best:LV[2].opt};
   lv=2;draw();document.getElementById('mk').click();
-  if(document.body.classList.contains('shot')){const c=document.getElementById('logcard'),g=c.parentElement;document.querySelector('.how').replaceWith(c);g.remove();document.querySelector('.stmt').append(document.getElementById('rule'))}}
+  if(document.body.classList.contains('shot')){const c=document.getElementById('logcard'),g=c.parentElement;document.querySelector('.how').replaceWith(c);g.remove();c.before(document.getElementById('rule'))}}
 
 /* 주소 뒤 #student / #bank / #task 로 바로 열기 */
 const h=location.hash.slice(1).split('-');const shot=h[0]==='shot';if(shot){document.body.classList.add('shot');h.shift()}
