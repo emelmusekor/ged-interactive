@@ -71,7 +71,7 @@
   .sw::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;transition:.15s}
   .sw:checked::after{left:17px}
   .next{margin:0;padding:0;list-style:none} .next li{padding:8px 0;border-bottom:1px solid #f0f2f5;font-size:14.5px} .next li:last-child{border:0}
-  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 14px}
   .filters label{font-size:13px;color:var(--sub);display:flex;flex-direction:column;gap:3px}
   select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;min-width:130px}
   tr.item{cursor:pointer} tr.item:hover td{background:#f8f9fb} tr.item.sel td{background:#eef3fb}
@@ -92,7 +92,7 @@
   .pair .card h2{font-size:16.5px} .pair .bar,.pair table{font-size:15px} .pair .legend,.pair th,.pair .sub{font-size:14px} .pair td,.pair th{white-space:nowrap}
   .pair .rule{font-size:15.5px} .pair .rc{font-size:14px} .pair .vers button{font-size:15px}
   @media (max-width:760px){.grid{grid-template-columns:1fr} header{padding:12px 16px;flex-wrap:wrap} nav{margin-left:0} main{padding:22px 16px 40px} .vers{margin-left:0} .card{overflow-x:auto}}
-  @media (max-width:600px){.stage{overflow-x:auto}.stage svg{min-width:560px}table{min-width:400px}}
+  @media (max-width:600px){.stage{padding:6px 4px 2px} h1{font-size:22px} .txt,.ask{font-size:16px}}
 </style>
 </head>
 <body>
@@ -112,7 +112,7 @@
   <p class="lead">김하늘 · 초등학교 5학년</p>
   <div class="grid">
     <div class="card">
-      <h2>개념 영역별 도달</h2>
+      <h2>개념 영역별 위치</h2>
       <div id="bars"></div>
       <div class="legend">
         <span><i style="width:14px;height:14px;border-radius:50%;background:var(--green)"></i>나</span>
@@ -141,7 +141,7 @@
 <!-- 교사 화면 -->
 <section id="bank">
   <h1>선발도구 문제은행</h1>
-  <p class="lead">선발용 문항은 시험 시간에만 열린다.</p>
+
   <div class="filters">
     <label>도구 유형<select id="f-area"><option value="">전체</option><option>영재성 검사</option><option>창의적 문제해결력</option><option>선교육 과제</option></select></label>
     <label>문항 형식<select id="f-type"><option value="">전체</option><option>인터랙티브</option><option>코딩</option><option>지필</option></select></label>
@@ -178,8 +178,8 @@
   </div>
   <details>
     <summary>문제 속의 정보과학</summary>
-    <p>로봇은 “크기가 4보다 큰가?” 같은 질문을 차례로 던져 열매를 나눈다. 이런 방법을 <b>결정 트리</b>라고 한다. 인공지능도 미리 맛본 열매, 곧 학습 데이터에서 가장 덜 틀리는 질문을 찾아 규칙을 만든다.</p>
-    <p>별난 열매까지 모두 맞히려고 규칙을 복잡하게 만들면 새 열매에서는 오히려 더 틀릴 수 있다. 그래서 규칙은 새 데이터로 확인한다.</p>
+    <p>로봇은 열매의 크기와 색을 보고 맛을 짐작한다. 이렇게 판단의 기준으로 삼는 정보를 <b>특성</b>이라고 한다. “크기가 4보다 큰가?”처럼 특성을 하나씩 물어 가며 나누는 방법은 <b>결정 트리</b>(decision tree)라고 부른다.</p>
+    <p>인공지능도 이렇게 배운다. 미리 맛본 열매가 학습 데이터이고, 여기에서 가장 덜 틀리는 규칙을 찾는다. 그런데 별난 열매까지 모두 맞히려고 규칙을 복잡하게 만들면 처음 보는 열매는 오히려 더 틀릴 수 있다. 그래서 규칙은 새 데이터로 확인한다.</p>
   </details>
   <details>
     <summary>풀이 기록</summary>
@@ -200,7 +200,7 @@
 const tabs=[...document.querySelectorAll('nav button')];
 function show(t){tabs.forEach(b=>b.classList.toggle('on',b.dataset.t===t));
   document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===t))}
-tabs.forEach(b=>b.onclick=()=>{history.replaceState(null,'','#/'+b.dataset.t);show(b.dataset.t)});
+tabs.forEach(b=>b.onclick=()=>{history.replaceState(null,'','#/'+b.dataset.t);show(b.dataset.t);if(b.dataset.t==='task')draw()});
 
 /* 학생 화면 */
 const concepts=[['순차·반복',82,[48,78]],['조건',58,[45,74]],['자료 다루기',71,[40,70]],['그래프',64,[22,52]],['규칙 찾기',88,[50,80]],['탐색·최적화',36,[18,46]]];
@@ -209,7 +209,7 @@ document.getElementById('bars').innerHTML=concepts.map(([n,v,[a,b]])=>{
   return `<div class="bar"><span>${n}</span><div class="track"><div class="band" style="left:${a}%;width:${b-a}%"></div><div class="dot" style="left:${v}%"></div></div><span class="sub">${pos}</span></div>`}).join('');
 const hist=[['지뢰 찾기','그래프',[0,0,1],true],['게임','탐색·최적화',[0,0,0,0,0,1],true],['격자판 장식하기','규칙 찾기',[1],false],['열매 고르기','규칙 찾기',[0,0,0,0,1],false]];
 function renderHist(){document.getElementById('hist').innerHTML=hist.map((h,i)=>`<tr><td><b>${h[0]}</b></td><td>${h[1]}</td><td><span class="tries">${h[2].map(o=>`<i class="${o?'ok':''}"></i>`).join('')}</span> ${h[2].length}번</td><td><input type="checkbox" class="sw" aria-label="${h[0]} 기록부 반영" data-i="${i}" ${h[3]?'checked':''}></td></tr>`).join('');
-  const n=hist.filter(h=>h[3]).length;document.getElementById('picked').textContent=`고른 기록 ${n}건은 담당 교사가 확인한 뒤 영재성발달기록부에 붙는다.`;
+  const n=hist.filter(h=>h[3]).length;document.getElementById('picked').textContent=`고른 기록 ${n}건은 담당 교사의 확인을 거쳐 영재성발달기록부에 실린다.`;
   document.querySelectorAll('#hist .sw').forEach(c=>c.onchange=()=>{hist[c.dataset.i][3]=c.checked;renderHist()})}
 renderHist();
 
@@ -250,18 +250,18 @@ function renderDetail(any){
 F.forEach(k=>document.getElementById('f-'+k).onchange=renderBank);renderBank();
 
 /* 인터랙티브 문항: 비버의 열매 고르기 */
-const PAIR=location.hash.includes('pair'),FS=PAIR?1.34:1;
+const PAIR=location.hash.includes('pair');let FS=PAIR?1.34:1,KS=1;
 const NS='http://www.w3.org/2000/svg',st=document.getElementById('st');
 const X0=66,X1=642,Y0=44,Y1=344,CW=(X1-X0)/8,RH=(Y1-Y0)/6;
 const SHADE=['#ffeeb5','#ffd978','#ffbb55','#f79440','#e46a35','#c8452c'];
 const FR=(x,y,s)=>({x,y,s});
 const LV=[
  {name:'쉬움',star:1,pt:10,two:false,
-  bg:'비버 마을의 로봇이 열매를 단 열매와 쓴 열매로 나누어 담으려고 한다. 로봇은 맛을 볼 수 없고 열매의 <b>크기</b>만 잴 수 있다. 비버들이 미리 맛본 열매에는 표정이 그려져 있다.',
+  bg:'비버 마을의 로봇은 맛을 볼 수 없다. 그래서 열매의 <b>크기</b>만 보고 단 열매와 쓴 열매를 나누어 담는다. 비버들이 미리 맛본 열매에는 표정을 그려 두었다.',
   ask:'칸막이를 어디에 놓아야 모든 열매를 맞는 바구니에 담을 수 있을까?',
   fruits:[FR(1,2,0),FR(2,5,0),FR(2,3,0),FR(3,1,0),FR(4,4,0),FR(4,6,0),FR(5,2,1),FR(6,5,1),FR(6,3,1),FR(7,1,1),FR(8,4,1)]},
  {name:'보통',star:2,pt:20,two:true,
-  bg:'이번 열매는 크기만으로는 나눌 수 없다. 그래서 로봇이 열매의 <b>색</b>도 보기로 했다. 세로 칸막이는 크기를, 가로 칸막이는 색을 나눈다.',
+  bg:'이번 열매는 크기만 보아서는 나눌 수 없다. 그래서 로봇은 열매의 <b>색</b>도 보기로 했다. 세로 칸막이는 크기를, 가로 칸막이는 색을 나눈다.',
   ask:'칸막이 두 개를 어떻게 놓아야 모든 열매를 맞게 담을 수 있을까?',
   fruits:[FR(1,5,0),FR(2,2,0),FR(2,6,0),FR(3,4,0),FR(3,1,0),FR(4,1,0),FR(5,2,0),FR(6,1,0),FR(7,2,0),FR(8,1,0),FR(4,4,1),FR(4,6,1),FR(5,3,1),FR(5,5,1),FR(6,4,1),FR(7,6,1),FR(7,3,1),FR(8,5,1)]},
  {name:'어려움',star:3,pt:30,two:true,
@@ -305,7 +305,7 @@ function basket(key,x,y){const s=S[lv],v=s.bask[key],w=104*FS,hh=26*FS,name=v==n
 let drag=null;
 function knob(x,y,ch,kind){const s=S[lv],g=el('g',{class:'kn',tabindex:0,role:'slider','data-k':kind,'aria-label':kind==='a'?'세로 칸막이(크기)':'가로 칸막이(색)',
     'aria-valuemin':1,'aria-valuemax':kind==='a'?7:5,'aria-valuenow':kind==='a'?s.a:s.b});
-  g.append(el('circle',{cx:x,cy:y,r:24,fill:'transparent'}),el('circle',{cx:x,cy:y,r:14,fill:'#14284f',stroke:'#fff','stroke-width':2.5}),el('text',{x,y:y+5.5,'text-anchor':'middle','font-size':16,'font-weight':700,fill:'#fff'},ch));
+  g.append(el('circle',{cx:x,cy:y,r:24*KS,fill:'transparent'}),el('circle',{cx:x,cy:y,r:14*KS,fill:'#14284f',stroke:'#fff','stroke-width':2.5*KS}),el('text',{x,y:y+5.5*KS,'text-anchor':'middle','font-size':16*KS,'font-weight':700,fill:'#fff'},ch));
   g.onpointerdown=e=>{e.preventDefault();touch();drag={kind,before:JSON.stringify([s.a,s.b,s.side])}};
   g.onkeydown=e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(!d)return;e.preventDefault();touch();
     const was=JSON.stringify([s.a,s.b,s.side]);
@@ -322,7 +322,13 @@ addEventListener('pointermove',e=>{if(!drag)return;if(e.pointerType==='mouse'&&!
 ['pointerup','pointercancel','blur'].forEach(t=>addEventListener(t,endDrag));
 function touch(){const g=LOG[lv];if(g.t0==null)g.t0=Date.now()}
 
-function draw(){const L=LV[lv],s=S[lv],lx=lineX(s),ly=lineY(s);st.replaceChildren();
+function fit(){if(PAIR)return false;const w=st.getBoundingClientRect().width;if(!w)return false;
+  const f=Math.round(Math.min(1.7,Math.max(1,594/w))*20)/20;if(f===FS)return false;FS=f;KS=Math.min(f,1.5);return true}
+addEventListener('resize',()=>{if(fit())draw()});
+
+function draw(){const L=LV[lv],s=S[lv],lx=lineX(s),ly=lineY(s);st.replaceChildren();fit();
+  const FT=PAIR?1.2:Math.min(FS,1.35),hh=26*FS,tickY=Y1+5+11.5*FS,by=tickY+9+hh/2,titleY=by+hh/2+7+13.5*FT,top=L.two?Y0-hh-16:Y0-14;
+  st.setAttribute('viewBox',`0 ${top} 660 ${titleY+8-top}`);
   const add=(...n)=>st.append(...n);
   const tint=k=>s.bask[k]==null?'#f7f8fa':s.bask[k]?'#fff0f2':'#edf3fb';
   const bl=s.side==='L';
@@ -334,19 +340,19 @@ function draw(){const L=LV[lv],s=S[lv],lx=lineX(s),ly=lineY(s);st.replaceChildre
   for(let i=1;i<8;i++)add(el('line',{x1:X0+i*CW,x2:X0+i*CW,y1:Y0,y2:Y1,stroke:'#e2e6ee'}));
   for(let j=1;j<6;j++)add(el('line',{x1:X0,x2:X1,y1:Y0+j*RH,y2:Y0+j*RH,stroke:'#e2e6ee'}));
   add(el('rect',{x:X0,y:Y0,width:X1-X0,height:Y1-Y0,fill:'none',stroke:'#8b95a7','stroke-width':1.5}));
-  for(let i=1;i<=8;i++)add(el('text',{x:fx(i),y:Y1+15+2*(FS-1)*10,'text-anchor':'middle','font-size':11.5*FS,fill:'#5b6577'},i));
-  for(let j=1;j<=6;j++)add(el('text',{x:X0-8,y:fy(j)+4,'text-anchor':'end','font-size':11.5*FS,fill:'#5b6577'},j));
-  add(el('text',{x:(X0+X1)/2,y:PAIR?432:430,'text-anchor':'middle','font-size':13.5*(PAIR?1.2:1),fill:'#3d4658'},'크기 (작다 → 크다)'));
-  add(el('text',{x:0,y:0,'text-anchor':'middle','font-size':13.5*FS,fill:'#3d4658',transform:`translate(${PAIR?26:22} ${(Y0+Y1)/2}) rotate(-90)`},'색 (연하다 → 진하다)'));
+  for(let i=1;i<=8;i++)add(el('text',{x:fx(i),y:tickY,'text-anchor':'middle','font-size':11.5*FS,fill:'#5b6577'},i));
+  for(let j=1;j<=6;j++)add(el('text',{x:X0-8,y:fy(j)+4*FS,'text-anchor':'end','font-size':11.5*FS,fill:'#5b6577'},j));
+  add(el('text',{x:(X0+X1)/2,y:titleY,'text-anchor':'middle','font-size':13.5*FT,fill:'#3d4658'},'크기 (작다 → 크다)'));
+  add(el('text',{x:0,y:0,'text-anchor':'middle','font-size':13.5*FT,fill:'#3d4658',transform:`translate(${14+9*FT} ${(Y0+Y1)/2}) rotate(-90)`},'색 (연하다 → 진하다)'));
   const done=s.checked==='done',wrong=done?errorsOf(L.fruits,s,L.two):[];
   L.fruits.forEach(f=>add(fruit(f,wrong.includes(f))));
   if(done&&LOG[lv].ok&&L.test&&wrong.length<=L.opt)L.test.forEach(f=>add(fruit(f,s.bask[regionOf(f,s,true)]!==f.s,true)));
   add(el('line',{x1:lx,x2:lx,y1:Y0-6,y2:Y1+6,stroke:'#14284f','stroke-width':4,'stroke-linecap':'round'}));
   if(L.two)add(el('line',{x1:bl?X0-6:lx,x2:bl?lx:X1+6,y1:ly,y2:ly,stroke:'#14284f','stroke-width':4,'stroke-linecap':'round'}));
   /* 바구니: 가로 칸막이가 있는 쪽은 위·아래, 없는 쪽은 아래 */
-  const mid=(a,b)=>Math.max(X0+52*FS,Math.min(X1-52*FS,(a+b)/2)),by=Y1+(PAIR?47:40);
+  const mid=(a,b)=>Math.max(X0+52*FS,Math.min(X1-52*FS,(a+b)/2));
   if(L.two){const bx=bl?mid(X0,lx):mid(lx,X1),ox=bl?mid(lx,X1):mid(X0,lx);
-    add(basket('T',bx,Y0-22),basket('B',bx,by),basket('O',ox,by));
+    add(basket('T',bx,Y0-8-hh/2),basket('B',bx,by),basket('O',ox,by));
   }else add(basket('L',mid(X0,lx),by),basket('R',mid(lx,X1),by));
   add(knob(lx,L.two&&Math.abs(ly-(Y0+RH*3))<1?Y0+RH*2:Y0+RH*3,'↔','a'));
   if(L.two){const lo=bl?0:s.a,hi=bl?s.a:8,gx=hi-lo>1?Math.round((lo+hi)/2):(lo+hi)/2;add(knob(X0+gx*CW,ly,'↕','b'))}
@@ -364,7 +370,7 @@ function ui(){const L=LV[lv],s=S[lv],g=LOG[lv];
   document.getElementById('rule').innerHTML='<em>로봇의 규칙</em>'+rule;
   const fb=document.getElementById('fb'),nx=document.getElementById('next');nx.hidden=true;fb.className='fb';fb.textContent='';
   if(s.checked){const n=errorsOf(L.fruits,s,L.two).length;
-    if(s.checked==='need'){fb.textContent='바구니를 모두 정해 주세요.';fb.classList.add('warn')}
+    if(s.checked==='need'){fb.textContent='바구니를 모두 골라 주세요.';fb.classList.add('warn')}
     else if(n<=L.opt){fb.classList.add('good');
       if(L.test){const hit=L.test.filter(f=>s.bask[regionOf(f,s,true)]===f.s).length;
         fb.textContent=`가장 적게 틀리는 규칙입니다. 새 열매(점선) ${L.test.length}개 중 ${hit}개를 맞혔습니다.`}
