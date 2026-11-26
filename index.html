@@ -8,49 +8,66 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" media="print" onload="this.media='all'">
 <title>비버의 열매 고르기</title>
 <style>
-  :root{--navy:#14284f;--ink:#1c2433;--sub:#667085;--line:#e3e7ee;--bg:#f6f7f9;--green:#0e7c66;--greenbg:#e8f4f0;--red:#c7352b;--amber:#b56a00}
+  :root{--navy:#14284f;--ink:#1c2433;--sub:#667085;--line:#e3e7ee;--bg:#f6f7f9;--green:#0e7c66;--greenbg:#e6f5ee;--red:#c7352b;--amber:#b56a00;--wood:#7a4a22}
   *{box-sizing:border-box}
   body{margin:0;background:#fff;color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word}
-  header{display:flex;align-items:center;gap:16px;padding:14px 28px;border-bottom:1px solid var(--line)}
-  header b{font-size:15px;color:var(--navy);letter-spacing:-.2px}
+  header{display:flex;align-items:center;gap:16px;padding:12px 28px;border-bottom:1px solid var(--line)}
+  header b{font-size:14.5px;color:var(--navy)}
   nav{margin-left:auto;display:flex;gap:4px}
   nav button{font:inherit;font-size:14px;color:var(--sub);background:none;border:0;padding:6px 10px;border-radius:6px;cursor:pointer}
   nav button.on{color:var(--navy);font-weight:700;background:var(--bg)}
-  main{max-width:900px;margin:0 auto;padding:30px 24px 48px}
+  main{max-width:820px;margin:0 auto;padding:26px 24px 44px}
   section{display:none} section.on{display:block}
-  h1{font-size:25px;margin:0;letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
-  .bv{width:34px;height:34px;flex:none}
-  .top{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+  h1{font-size:26px;margin:0;letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
+  .bv{width:40px;height:40px;flex:none;transform-origin:50% 90%}
+  .top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}
   .vers{margin-left:auto;display:flex;gap:6px}
-  .vers button{font:inherit;font-size:14px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--sub);cursor:pointer;white-space:nowrap}
-  .vers button span{color:#cfd4dc;margin-left:3px;letter-spacing:1px}
-  .vers button.on{border-color:var(--navy);color:var(--navy);font-weight:700}
+  .vers button{font:inherit;font-size:14px;padding:5px 13px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--sub);cursor:pointer;white-space:nowrap}
+  .vers button span{display:inline-block;color:#d5d9e0;margin-left:4px;letter-spacing:1px}
+  .vers button.on{border-color:#f0a400;color:var(--navy);font-weight:700;background:#fff9ea}
   .vers button.on span,.vers button.ok span{color:#f0a400}
-  .txt{margin:0 0 6px;font-size:16.5px} .txt b{font-weight:700}
-  .ask{margin:0 0 14px;font-size:16.5px;font-weight:700;color:var(--navy)}
-  .stage{border:1px solid var(--line);border-radius:14px;padding:10px 12px 6px;background:#fff}
+  .txt{margin:0 0 4px;font-size:17px} .txt b{font-weight:700;color:#b4530a}
+  .ask{margin:0 0 12px;font-size:17px;font-weight:700;color:var(--navy)}
+  .stage{position:relative;overflow:hidden;border:2px solid #e3ead6;border-radius:20px;padding:8px 8px 4px;background:#fffef8}
   .stage svg{width:100%;height:auto;display:block;touch-action:pan-y;user-select:none}
-  .kn{cursor:grab;outline:none;touch-action:none} .kn:focus-visible circle,.bk:focus-visible rect{stroke:#f0a400;stroke-width:3.5}
-  .bk{cursor:pointer;outline:none} .fr{pointer-events:none}
-  .fr.wrong{animation:wob .45s ease-in-out 2;transform-box:fill-box;transform-origin:center}
-  @keyframes wob{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
-  .rule{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;margin:12px 2px 0;font-size:14.5px;color:#475467}
-  .rule em{font-style:normal;font-weight:700;color:var(--navy)} .rule b{color:var(--navy)}
-  .rc{display:inline-block;white-space:nowrap;font-style:normal;font-weight:700;font-size:13px;border-radius:999px;padding:0 9px;border:1.5px dashed #98a2b3;color:var(--sub)}
-  .rc.s{border:1.5px solid #c0354f;color:#9c1f3a;background:#ffe4e8} .rc.b{border:1.5px solid #3b5f9b;color:#27477f;background:#e1eaf7}
-  .act{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
-  .btn{font:inherit;font-size:15px;padding:9px 20px;border-radius:9px;border:1px solid var(--navy);background:#fff;color:var(--navy);cursor:pointer}
-  .btn.fill{background:var(--navy);color:#fff} .btn.sm{font-size:13.5px;padding:6px 12px} .btn:disabled{opacity:.5;cursor:default}
-  .btn.go{margin-left:auto;border-color:var(--green);color:var(--green);font-weight:700}
-  .fb{font-size:15.5px;font-weight:600} .fb.good{color:var(--green)} .fb.bad{color:var(--red)} .fb.warn{color:var(--amber)}
-  details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
-  summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:15px}
-  details p{margin:10px 0 0;font-size:15.5px;line-height:1.75;color:#344054}
-  table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:8px}
+  .kn{cursor:grab;outline:none;touch-action:none} .bk{cursor:pointer;outline:none}
+  .kn:focus-visible .kd,.bk:focus-visible .bb{stroke:#1d6fe0;stroke-width:3.5}
+  .bk:hover .bb{filter:brightness(.97)}
+  .fr{pointer-events:none;transform-box:fill-box;transform-origin:center}
+  .fr.in{animation:pop .32s ease-out both}
+  .fr.wrong{animation:wob .45s ease-in-out 2}
+  @keyframes pop{from{transform:scale(.2);opacity:0}70%{transform:scale(1.12)}}
+  @keyframes wob{25%{transform:translateX(-3px) rotate(-6deg)}75%{transform:translateX(3px) rotate(6deg)}}
+  .say{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .bot{width:56px;height:56px;flex:none}
+  .bot .mo{display:none} .bot.n .mn,.bot.good .mg,.bot.bad .mb{display:inline}
+  .bot.good{animation:jump .5s ease 2}
+  .bub{position:relative;margin:0;flex:1 1 260px;min-height:46px;display:flex;align-items:center;background:#f1f4f9;border-radius:16px;padding:9px 16px;font-size:16px;font-weight:600;color:#344054}
+  .bub::before{content:"";position:absolute;left:-7px;top:50%;margin-top:-7px;border:7px solid transparent;border-left:0;border-right-color:#f1f4f9}
+  .bub.good{background:var(--greenbg);color:var(--green)} .bub.good::before{border-right-color:var(--greenbg)}
+  .bub.bad{background:#fdecea;color:var(--red)} .bub.bad::before{border-right-color:#fdecea}
+  .bub.warn{background:#fdf3df;color:var(--amber)} .bub.warn::before{border-right-color:#fdf3df}
+  .btns{display:flex;gap:8px;flex:none;margin-left:auto}
+  .btn{font:inherit;font-size:15.5px;font-weight:700;padding:10px 20px;border-radius:999px;border:2px solid var(--navy);background:#fff;color:var(--navy);cursor:pointer}
+  .btn.fill{background:var(--navy);color:#fff} .btn.fill:hover{background:#1d3a70}
+  .btn.ic{padding:10px 14px} .btn.sm{font-size:13.5px;font-weight:600;padding:6px 12px;border-width:1px}
+  .btn.go{border-color:#f0a400;background:#f0a400;color:#fff}
+  .cf{position:absolute;top:-24px;font-style:normal;color:#f0a400;font-size:20px;pointer-events:none;animation:fall 1.3s ease-in forwards}
+  @keyframes fall{to{transform:translateY(460px) rotate(320deg);opacity:0}}
+  .jump{animation:jump .5s ease 3}
+  @keyframes jump{50%{transform:translateY(-7px) rotate(-7deg)}}
+  .vers span.pop{animation:starpop .45s ease 3}
+  @keyframes starpop{50%{transform:scale(1.6)}}
+  .more{display:flex;gap:18px;margin-top:18px}
+  .more button{font:inherit;font-size:14px;color:var(--sub);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .more button[aria-expanded=true]{color:var(--navy);font-weight:700}
+  .panel{margin-top:10px;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .panel p{margin:0;font-size:15.5px;line-height:1.75;color:#344054}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
   th{font-weight:600;color:var(--sub);text-align:left;border-bottom:1px solid var(--line);padding:6px;font-size:13px;white-space:nowrap}
   td{padding:7px 6px;border-bottom:1px solid #f0f2f5;vertical-align:middle}
   tr:last-child td{border-bottom:0}
-  pre{background:#101828;color:#d7e3ff;border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.5;overflow:auto;margin:10px 0 0;max-height:280px;font-family:inherit;font-variant-numeric:tabular-nums;white-space:pre-wrap}
+  pre{background:#101828;color:#d7e3ff;border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.5;overflow:auto;margin:10px 0 0;max-height:260px;font-family:inherit;font-variant-numeric:tabular-nums;white-space:pre-wrap}
   .chip{font-size:12px;padding:1px 9px;border-radius:999px;background:#eef2f7;color:#475467;font-weight:600;white-space:nowrap}
   .chip.g{background:var(--greenbg);color:var(--green)} .chip.a{background:#fdf3df;color:var(--amber)} .chip.r{background:#fbe9e7;color:var(--red)}
   .lead{color:var(--sub);font-size:15px;margin:6px 0 18px}
@@ -84,15 +101,16 @@
   .shot header,.shot footer{display:none} body.pair{background:var(--bg)}
   .pair main{display:grid;grid-template-columns:.84fr 1.16fr;gap:16px;align-items:start;padding:14px;max-width:none;background:var(--bg)}
   .pair section{display:block!important} .pair #bank{display:none!important}
-  .pair h1,.pair .lead,.pair .txt,.pair .ask,.pair .act,.pair details,.pair #recs,.pair #picked,.pair .legend span:nth-child(3),.pair #hist tr:nth-child(n+4){display:none}
+  .pair h1,.pair .lead,.pair .txt,.pair .ask,.pair .btns,.pair .more,.pair .panel,.pair #recs,.pair #picked,.pair #hist tr:nth-child(n+4){display:none}
   .pair .top{margin:0 0 10px} .pair .vers{margin:0} .pair .grid{grid-template-columns:1fr}
-  .pair .card,.pair .stage{background:#fff} .pair .stage svg{max-width:520px;margin:0 auto}
+  .pair .card{background:#fff}
   .pair section::before{display:block;font-weight:700;color:var(--navy);margin:0 0 10px;font-size:17px}
   .pair #student::before{content:"(가) 학생의 진단 결과 화면"} .pair #task::before{content:"(나) 인터랙티브 문항 ‘비버의 열매 고르기’"}
   .pair .card h2{font-size:16.5px} .pair .bar,.pair table{font-size:15px} .pair .legend,.pair th,.pair .sub{font-size:14px} .pair td,.pair th{white-space:nowrap}
-  .pair .rule{font-size:15.5px} .pair .rc{font-size:14px} .pair .vers button{font-size:15px}
-  @media (max-width:760px){.grid{grid-template-columns:1fr} header{padding:12px 16px;flex-wrap:wrap} nav{margin-left:0} main{padding:22px 16px 40px} .vers{margin-left:0} .card{overflow-x:auto}}
-  @media (max-width:600px){.stage{padding:6px 4px 2px} h1{font-size:22px} .txt,.ask{font-size:16px}}
+  .pair .vers button{font-size:15px} .pair .bub{font-size:16.5px}
+  @media (max-width:760px){.grid{grid-template-columns:1fr} header{padding:12px 16px;flex-wrap:wrap} nav{margin-left:0} main{padding:20px 14px 36px} .vers{margin-left:0} .card{overflow-x:auto}}
+  @media (max-width:600px){.stage{padding:6px 2px 2px;border-radius:16px} h1{font-size:22px} .txt,.ask{font-size:16px} .btns{width:100%;margin:0} .btns .fill{flex:1}}
+  @media (prefers-reduced-motion:reduce){.fr.in,.fr.wrong,.bot.good,.jump,.vers span.pop{animation:none}}
 </style>
 </head>
 <body>
@@ -133,7 +151,6 @@
     <ul class="next">
       <li><b>한붓그리기</b> <span class="sub">· 그래프 · 지뢰 찾기보다 한 단계 높은 문항</span></li>
       <li><b>아이템 구매하기 2</b> <span class="sub">· 조건 · 오답이 잦았던 개념의 보충 문항</span></li>
-      <li><b>지역 과학관 인공지능 체험 프로그램</b> <span class="sub">· 12월 모집</span></li>
     </ul>
   </div>
 </section>
@@ -141,9 +158,7 @@
 <!-- 교사 화면 -->
 <section id="bank">
   <h1>선발도구 문제은행</h1>
-
   <div class="filters">
-    <label>도구 유형<select id="f-area"><option value="">전체</option><option>영재성 검사</option><option>창의적 문제해결력</option><option>선교육 과제</option></select></label>
     <label>문항 형식<select id="f-type"><option value="">전체</option><option>인터랙티브</option><option>코딩</option><option>지필</option></select></label>
     <label>공개 등급<select id="f-open"><option value="">전체</option><option>공개 연습</option><option>기관 공유</option><option>선발용</option></select></label>
   </div>
@@ -161,35 +176,47 @@
 <!-- 인터랙티브 문항 -->
 <section id="task" class="on">
   <div class="top">
-    <h1><svg class="bv" viewBox="0 0 48 48" aria-hidden="true"><circle cx="11" cy="12" r="6" fill="#7a4a2a"/><circle cx="37" cy="12" r="6" fill="#7a4a2a"/><circle cx="24" cy="25" r="18" fill="#9a6238"/><ellipse cx="24" cy="31" rx="10" ry="8" fill="#f3dcc0"/><circle cx="17" cy="21" r="2.4" fill="#2b1a10"/><circle cx="31" cy="21" r="2.4" fill="#2b1a10"/><ellipse cx="24" cy="27" rx="3.4" ry="2.4" fill="#2b1a10"/><rect x="20.6" y="31" width="3.2" height="5.4" rx="1" fill="#fff" stroke="#c9b08f" stroke-width=".6"/><rect x="24.2" y="31" width="3.2" height="5.4" rx="1" fill="#fff" stroke="#c9b08f" stroke-width=".6"/></svg>비버의 열매 고르기</h1>
+    <h1><svg class="bv" id="bv" viewBox="0 0 48 48" aria-hidden="true"><circle cx="11" cy="12" r="6" fill="#7a4a2a"/><circle cx="37" cy="12" r="6" fill="#7a4a2a"/><circle cx="24" cy="25" r="18" fill="#9a6238"/><ellipse cx="24" cy="31" rx="10" ry="8" fill="#f3dcc0"/><circle cx="17" cy="21" r="2.4" fill="#2b1a10"/><circle cx="31" cy="21" r="2.4" fill="#2b1a10"/><ellipse cx="24" cy="27" rx="3.4" ry="2.4" fill="#2b1a10"/><rect x="20.6" y="31" width="3.2" height="5.4" rx="1" fill="#fff" stroke="#c9b08f" stroke-width=".6"/><rect x="24.2" y="31" width="3.2" height="5.4" rx="1" fill="#fff" stroke="#c9b08f" stroke-width=".6"/></svg>비버의 열매 고르기</h1>
     <div class="vers" id="vers"></div>
   </div>
   <p class="txt" id="bg"></p>
   <p class="ask" id="ask"></p>
-  <div class="stage">
-    <svg id="st" viewBox="0 0 660 436" role="group" aria-label="열매가 놓인 판과 칸막이"></svg>
+  <div class="stage" id="stage">
+    <svg id="st" viewBox="16 0 642 430" role="group" aria-label="열매가 놓인 판과 칸막이"></svg>
   </div>
-  <div class="rule" id="rule"></div>
-  <div class="act">
-    <button class="btn fill" id="check">검사하기</button>
-    <button class="btn" id="reset">다시 놓기</button>
-    <span id="fb" class="fb" role="status" aria-live="polite"></span>
-    <button class="btn go" id="next" hidden>다음 난이도</button>
+  <div class="say">
+    <svg class="bot n" id="bot" viewBox="0 0 56 56" aria-hidden="true">
+      <line x1="28" y1="4" x2="28" y2="12" stroke="#2f4f7f" stroke-width="2.4" stroke-linecap="round"/><circle cx="28" cy="4.5" r="3.4" fill="#f0a400"/>
+      <rect x="3" y="24" width="6" height="14" rx="3" fill="#7fa6d6"/><rect x="47" y="24" width="6" height="14" rx="3" fill="#7fa6d6"/>
+      <rect x="8" y="11" width="40" height="38" rx="12" fill="#b9d4f1" stroke="#2f4f7f" stroke-width="2.4"/>
+      <circle cx="20" cy="27" r="5.6" fill="#fff" stroke="#2f4f7f" stroke-width="1.6"/><circle cx="36" cy="27" r="5.6" fill="#fff" stroke="#2f4f7f" stroke-width="1.6"/>
+      <circle cx="20.6" cy="27.6" r="2.4" fill="#14284f"/><circle cx="36.6" cy="27.6" r="2.4" fill="#14284f"/>
+      <path class="mo mn" d="M22 40h12" stroke="#2f4f7f" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+      <path class="mo mg" d="M20 38q8 8 16 0" stroke="#2f4f7f" stroke-width="2.4" stroke-linecap="round" fill="#fff"/>
+      <path class="mo mb" d="M21 42q7 -6 14 0" stroke="#2f4f7f" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    </svg>
+    <p id="fb" class="bub" role="status" aria-live="polite"></p>
+    <div class="btns">
+      <button class="btn fill" id="check">담아 보기</button>
+      <button class="btn ic" id="reset" aria-label="다시 놓기" title="다시 놓기">↺</button>
+      <button class="btn go" id="next" hidden>다음 ▶</button>
+    </div>
   </div>
-  <details>
-    <summary>문제 속의 정보과학</summary>
-    <p>로봇은 열매의 크기와 색을 보고 맛을 짐작한다. 이렇게 판단의 기준으로 삼는 정보를 <b>특성</b>이라고 한다. “크기가 4보다 큰가?”처럼 특성을 하나씩 물어 가며 나누는 방법은 <b>결정 트리</b>(decision tree)라고 부른다.</p>
-    <p>인공지능도 이렇게 배운다. 미리 맛본 열매가 학습 데이터이고, 여기에서 가장 덜 틀리는 규칙을 찾는다. 그런데 별난 열매까지 모두 맞히려고 규칙을 복잡하게 만들면 처음 보는 열매는 오히려 더 틀릴 수 있다. 그래서 규칙은 새 데이터로 확인한다.</p>
-  </details>
-  <details>
-    <summary>풀이 기록</summary>
+  <div class="more">
+    <button data-p="why" aria-expanded="false">문제 속의 정보과학</button>
+    <button data-p="rec" aria-expanded="false">풀이 기록</button>
+  </div>
+  <div class="panel" id="why" hidden>
+    <p>로봇이 판단의 기준으로 삼은 크기와 색을 <b>특성</b>이라고 한다. 특성을 하나씩 물어 가며 나누는 방법은 <b>결정 트리</b>(decision tree)라고 부른다. 인공지능도 미리 맛본 열매, 곧 학습 데이터에서 가장 덜 틀리는 규칙을 찾고, 그 규칙을 처음 보는 데이터로 확인한다.</p>
+  </div>
+  <div class="panel" id="rec" hidden>
     <table>
       <thead><tr><th>난이도</th><th>검사 횟수</th><th>조작 횟수</th><th>소요 시간</th><th>결과</th></tr></thead>
       <tbody id="log"></tbody>
     </table>
     <p style="margin-top:12px"><button class="btn sm" id="mk">GED로 보낼 요약 기록 보기</button></p>
     <pre id="json" hidden></pre>
-  </details>
+  </div>
 </section>
 </main>
 <footer>제안용 예시 화면이며 이름과 수치는 가상이다.</footer>
@@ -215,16 +242,15 @@ renderHist();
 
 /* 교사 화면 */
 const bank=[
- {t:'숫자 카드',area:'선교육 과제',skill:'패턴 인식',type:'인터랙티브',p:.81,d:.34,open:'공개 연습',use:'2024·2025 선교육',st:4},
- {t:'격자판 장식하기',area:'영재성 검사',skill:'패턴 인식',type:'인터랙티브',p:.52,d:.47,open:'기관 공유',use:'2025 시행',st:4},
- {t:'지뢰 찾기',area:'창의적 문제해결력',skill:'추상화',type:'인터랙티브',p:.44,d:.52,open:'기관 공유',use:'2025 시행',st:4},
- {t:'열매 고르기',area:'선교육 과제',skill:'패턴 인식',type:'인터랙티브',p:.63,d:.45,open:'공개 연습',use:'2026 진단 과제',st:4},
- {t:'최대공약수',area:'선교육 과제',skill:'알고리즘 설계',type:'코딩',p:.58,d:.44,open:'공개 연습',use:'2025 선교육',st:4},
- {t:'예시 문항 B-2',area:'영재성 검사',skill:'추상화',type:'지필',p:0,d:0,open:'기관 공유',use:'2024 시행',st:4},
- {t:'2027 선발 문항 A-3',area:'영재성 검사',skill:'추상화',type:'지필',p:null,d:null,open:'선발용',use:'미사용',st:2},
+ {t:'격자판 장식하기',skill:'패턴 인식',type:'인터랙티브',p:.52,d:.47,open:'기관 공유',st:4},
+ {t:'지뢰 찾기',skill:'추상화',type:'인터랙티브',p:.44,d:.52,open:'기관 공유',st:4},
+ {t:'열매 고르기',skill:'패턴 인식',type:'인터랙티브',p:.63,d:.45,open:'공개 연습',st:4},
+ {t:'최대공약수',skill:'알고리즘 설계',type:'코딩',p:.58,d:.44,open:'공개 연습',st:4},
+ {t:'예시 문항 B-2',skill:'추상화',type:'지필',p:0,d:0,open:'기관 공유',st:4},
+ {t:'2027 선발 문항 A-3',skill:'추상화',type:'지필',p:null,d:null,open:'선발용',st:2},
 ];
-let sel=2;
-const F=['area','type','open'];
+let sel=1;
+const F=['type','open'];
 function fmt(v){return v==null?'–':v.toFixed(2)}
 function renderBank(){
   const f=Object.fromEntries(F.map(k=>[k,document.getElementById('f-'+k).value]));
@@ -242,7 +268,7 @@ function renderDetail(any){
   const b=bank[sel],lock=b.open==='선발용';
   const flow=steps.map((s,i)=>`<span class="${i<b.st?'done':i===b.st?'now':''}">${s}</span>`).join('→');
   const body=lock?`<p class="sub" style="margin:0">선발용 문항은 내용을 볼 수 없다. 기관이 정한 시험 시간에 응시 화면에서만 열리고, 열람 기록이 남는다.</p>`
-    :`<div class="kv"><span>도구 유형</span><span>${b.area}</span><span>측정 요소</span><span>${b.skill}</span><span>채점</span><span>${b.type==='지필'?'채점 기준에 따라 교사 채점':b.type==='코딩'?'자동 채점':'자동 채점, 조작 과정 기록'}</span><span>사용 이력</span><span>${b.use}</span><span>문항 통계</span><span>정답률 ${fmt(b.p)} · 변별도 ${fmt(b.d)}${b.d<.2?' <span class="chip r">검토 필요</span>':''}</span></div>
+    :`<div class="kv"><span>측정 요소</span><span>${b.skill}</span><span>채점</span><span>${b.type==='지필'?'채점 기준에 따라 교사 채점':b.type==='코딩'?'자동 채점':'자동 채점, 조작 과정 기록'}</span><span>문항 통계</span><span>정답률 ${fmt(b.p)} · 변별도 ${fmt(b.d)}${b.d<.2?' <span class="chip r">검토 필요</span>':''}</span></div>
       <button class="btn sm" id="var">변형 문항 초안 만들기</button><div id="out"></div>`;
   document.getElementById('detail').innerHTML=`<h2>${b.t}</h2><div class="flow">${flow}</div>${body}`;
   if(!lock)document.getElementById('var').onclick=()=>{document.getElementById('out').innerHTML=`<div class="draft"><span class="chip a">인공지능 초안 · 검토 전</span><br>원문항의 수치와 소재를 바꾼 초안이다. 교사 검토와 전문가 검증을 거쳐야 등록되며, 선발용으로는 등록되지 않는다.</div>`};
@@ -250,28 +276,32 @@ function renderDetail(any){
 F.forEach(k=>document.getElementById('f-'+k).onchange=renderBank);renderBank();
 
 /* 인터랙티브 문항: 비버의 열매 고르기 */
-const PAIR=location.hash.includes('pair');let FS=PAIR?1.34:1,KS=1;
+const PAIR=location.hash.includes('pair'),SHOT=location.hash.includes('shot');let FS=PAIR?1.34:1,KS=1;
 const NS='http://www.w3.org/2000/svg',st=document.getElementById('st');
 const X0=66,X1=642,Y0=44,Y1=344,CW=(X1-X0)/8,RH=(Y1-Y0)/6;
 const SHADE=['#ffeeb5','#ffd978','#ffbb55','#f79440','#e46a35','#c8452c'];
 const FR=(x,y,s)=>({x,y,s});
 const LV=[
  {name:'쉬움',star:1,pt:10,two:false,
-  bg:'비버 마을의 로봇은 맛을 볼 수 없다. 그래서 열매의 <b>크기</b>만 보고 단 열매와 쓴 열매를 나누어 담는다. 비버들이 미리 맛본 열매에는 표정을 그려 두었다.',
-  ask:'칸막이를 어디에 놓아야 모든 열매를 맞는 바구니에 담을 수 있을까?',
+  bg:'웃는 열매는 달고, 찡그린 열매는 쓰다. 로봇은 맛을 볼 수 없어서 열매의 <b>크기</b>만 보고 나누어 담는다.',
+  ask:'칸막이를 어디에 놓아야 모두 맞게 담을 수 있을까?',
+  tip:'칸막이는 끌어서 옮기고, 바구니는 눌러서 골라요.',
   fruits:[FR(1,2,0),FR(2,5,0),FR(2,3,0),FR(3,1,0),FR(4,4,0),FR(4,6,0),FR(5,2,1),FR(6,5,1),FR(6,3,1),FR(7,1,1),FR(8,4,1)]},
  {name:'보통',star:2,pt:20,two:true,
-  bg:'이번 열매는 크기만 보아서는 나눌 수 없다. 그래서 로봇은 열매의 <b>색</b>도 보기로 했다. 세로 칸막이는 크기를, 가로 칸막이는 색을 나눈다.',
-  ask:'칸막이 두 개를 어떻게 놓아야 모든 열매를 맞게 담을 수 있을까?',
+  bg:'이번에는 크기만 보아서는 나눌 수 없다. 그래서 로봇은 열매의 <b>색</b>도 보기로 했다.',
+  ask:'칸막이 두 개를 어떻게 놓아야 할까?',
+  tip:'가로 칸막이는 왼쪽이나 오른쪽으로 넘길 수 있어요.',
   fruits:[FR(1,5,0),FR(2,2,0),FR(2,6,0),FR(3,4,0),FR(3,1,0),FR(4,1,0),FR(5,2,0),FR(6,1,0),FR(7,2,0),FR(8,1,0),FR(4,4,1),FR(4,6,1),FR(5,3,1),FR(5,5,1),FR(6,4,1),FR(7,6,1),FR(7,3,1),FR(8,5,1)]},
  {name:'어려움',star:3,pt:30,two:true,
-  bg:'숲에서 새로 따 온 열매에는 <b>별난 열매</b>가 섞여 있다. 칸막이 두 개로는 모든 열매를 맞게 담을 수 없다.',
+  bg:'새로 따 온 열매에는 <b>별난 열매</b>가 섞여 있어서, 모두 맞게 담을 수는 없다.',
   ask:'잘못 담기는 열매가 가장 적은 규칙은 무엇일까?',
+  tip:'가장 덜 틀리게 담아 봐요.',
   fruits:[FR(8,5,0),FR(8,2,0),FR(7,6,0),FR(6,4,0),FR(6,1,0),FR(5,1,0),FR(4,2,0),FR(3,1,0),FR(2,2,0),FR(1,1,0),FR(5,4,1),FR(5,6,1),FR(4,3,1),FR(4,5,1),FR(3,4,1),FR(2,6,1),FR(2,3,1),FR(1,5,1),FR(7,3,1),FR(3,6,0),FR(1,3,0)],
   test:[FR(4,6,1),FR(1,4,1),FR(3,2,0),FR(7,4,1),FR(5,5,1),FR(8,1,0),FR(6,6,0),FR(2,5,1)]}
 ];
 const fresh=()=>({a:1,b:1,side:'R',bask:{},checked:null});
 let lv=0,S=LV.map(fresh),LOG=LV.map(()=>({checks:0,moves:0,t0:null,sec:null,ok:false,best:null}));
+let running=false,timer=0,enter=true,BP={};
 const el=(n,a={},t)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;return e};
 const fx=x=>X0+(x-.5)*CW,fy=y=>Y1-(y-.5)*RH,lineX=s=>X0+s.a*CW,lineY=s=>Y1-s.b*RH;
 function regionOf(f,s,two){const side=f.x<=s.a?'L':'R';if(!two)return side;return side!==s.side?'O':(f.y>s.b?'T':'B')}
@@ -284,28 +314,38 @@ function optimum(L){let best=1e9;const keys=regions(L.two);
   return best}
 LV.forEach(L=>L.opt=optimum(L));
 
-function fruit(f,wrong,isNew){const g=el('g',{class:'fr'+(wrong?' wrong':'')}),r=11.5+f.x*1.45,cx=fx(f.x),cy=fy(f.y);
+/* 얼굴(웃음·찡그림)과 잎 */
+function face(g,cx,cy,r,sweet){const ink='#3a1c0c',ex=r*.34,ey=cy-r*.16,my=cy+r*.3,mw=r*.38;
+  g.append(el('circle',{cx:cx-ex,cy:ey,r:r*.1,fill:ink}),el('circle',{cx:cx+ex,cy:ey,r:r*.1,fill:ink}),
+    el('path',{d:sweet?`M${cx-mw} ${my} q${mw} ${r*.42} ${mw*2} 0`:`M${cx-mw} ${my+r*.16} q${mw} ${-r*.4} ${mw*2} 0`,fill:'none',stroke:ink,'stroke-width':Math.max(1.5,r*.11),'stroke-linecap':'round'}))}
+function fruit(f,wrong,isNew,i){const g=el('g',{class:'fr'+(wrong?' wrong':'')+(enter&&!isNew?' in':'')}),r=11.5+f.x*1.45,cx=fx(f.x),cy=fy(f.y);
+  if(i!=null){g.dataset.i=i;if(enter)g.style.animationDelay=(i*22)+'ms'}
+  g.append(el('ellipse',{cx,cy:cy+r*.96,rx:r*.72,ry:r*.16,fill:'rgba(70,90,40,.14)'}));
   if(wrong)g.append(el('circle',{cx,cy,r:r+6,fill:'none',stroke:'#d92d20','stroke-width':3}),el('text',{x:cx+r+2,y:cy-r+2,'font-size':15*FS,'font-weight':800,fill:'#d92d20'},'×'));
   if(isNew)g.append(el('circle',{cx,cy,r:r+5,fill:'none',stroke:'#14284f','stroke-width':2,'stroke-dasharray':'4 3'}));
   if(f.s)g.append(el('path',{d:`M${cx} ${cy-r+1} q7 -11 15 -7 q-3 9 -15 7z`,fill:'#3c9a4a'}));
   g.append(el('circle',{cx,cy,r,fill:SHADE[f.y-1],stroke:'#8a4b1f','stroke-width':1.4}));
-  const ink='#3a1c0c',ex=r*.34,ey=cy-r*.16;
-  g.append(el('circle',{cx:cx-ex,cy:ey,r:r*.1,fill:ink}),el('circle',{cx:cx+ex,cy:ey,r:r*.1,fill:ink}));
-  const my=cy+r*.3,mw=r*.38;
-  g.append(el('path',{d:f.s?`M${cx-mw} ${my} q${mw} ${r*.42} ${mw*2} 0`:`M${cx-mw} ${my+r*.16} q${mw} ${-r*.4} ${mw*2} 0`,fill:'none',stroke:ink,'stroke-width':Math.max(1.6,r*.11),'stroke-linecap':'round'}));
-  return g}
+  face(g,cx,cy,r,f.s);return g}
 const WHERE={L:'왼쪽',R:'오른쪽',O:'색을 보지 않는 쪽',T:'색이 진한 쪽',B:'색이 연한 쪽'};
 function bump(){const g=LOG[lv];if(!g.ok)g.moves++}
-function basket(key,x,y){const s=S[lv],v=s.bask[key],w=104*FS,hh=26*FS,name=v==null?'바구니 고르기':v?'단 열매 바구니':'쓴 열매 바구니';
+/* 바구니: 누를 때마다 단 열매 ↔ 쓴 열매 */
+function basket(key,x,y){const s=S[lv],v=s.bask[key],bw=78*FS,hb=34*FS,name=v==null?'바구니 고르기':v?'단 열매 바구니':'쓴 열매 바구니';
+  BP[key]={x,y};
+  const col=v==null?['#fff','#98a2b3']:v?['#ffd3da','#c0354f']:['#d3e1f6','#3b5f9b'];
   const g=el('g',{class:'bk',tabindex:0,role:'button','data-key':key,'aria-label':WHERE[key]+' 구역: '+name});
-  g.append(el('rect',{x:x-w/2,y:y-hh/2,width:w,height:hh,rx:hh/2,fill:v==null?'#fff':v?'#ffd9df':'#d8e4f5',stroke:v==null?'#8a93a3':v?'#c0354f':'#3b5f9b','stroke-width':1.6,'stroke-dasharray':v==null?'5 3':'none'}));
-  g.append(el('text',{x,y:y+4.5*FS,'text-anchor':'middle','font-size':13*FS,'font-weight':700,fill:v==null?'#5b6577':v?'#9c1f3a':'#27477f'},name));
+  g.append(el('rect',{x:x-bw/2-6,y:y-hb*.8,width:bw+12,height:hb*1.36,fill:'transparent'}));
+  g.append(el('path',{d:`M${x-bw*.3} ${y-hb*.42} Q${x} ${y-hb*1.18} ${x+bw*.3} ${y-hb*.42}`,fill:'none',stroke:col[1],'stroke-width':2.6*FS,'stroke-linecap':'round','stroke-dasharray':v==null?'5 4':'none'}));
+  const t=y-hb/2,b=y+hb/2,q=5*FS;
+  g.append(el('path',{class:'bb',d:`M${x-bw/2} ${t} H${x+bw/2} L${x+bw*.4} ${b-q} Q${x+bw*.39} ${b} ${x+bw*.39-q} ${b} H${x-bw*.39+q} Q${x-bw*.39} ${b} ${x-bw*.4} ${b-q} Z`,fill:col[0],stroke:col[1],'stroke-width':2,'stroke-linejoin':'round','stroke-dasharray':v==null?'5 4':'none'}));
+  if(v==null)g.append(el('text',{x,y:y+7.5*FS,'text-anchor':'middle','font-size':21*FS,'font-weight':800,fill:'#98a2b3'},'?'));
+  else{const r=11.5*FS;if(v)g.append(el('path',{d:`M${x} ${y-r+1} q${5*FS} ${-8*FS} ${10*FS} ${-5*FS} q${-2*FS} ${6*FS} ${-10*FS} ${5*FS}z`,fill:'#3c9a4a'}));
+    g.append(el('circle',{cx:x,cy:y,r,fill:'#ffc65c',stroke:'#8a4b1f','stroke-width':1.3}));face(g,x,y,r,v)}
   const flip=()=>{touch();s.bask[key]=v==null?1:1-v;bump();s.checked=null;draw();const n=st.querySelector('.bk[data-key="'+key+'"]');if(n)n.focus()};
   g.onclick=flip;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}};return g}
 let drag=null;
 function knob(x,y,ch,kind){const s=S[lv],g=el('g',{class:'kn',tabindex:0,role:'slider','data-k':kind,'aria-label':kind==='a'?'세로 칸막이(크기)':'가로 칸막이(색)',
     'aria-valuemin':1,'aria-valuemax':kind==='a'?7:5,'aria-valuenow':kind==='a'?s.a:s.b});
-  g.append(el('circle',{cx:x,cy:y,r:24*KS,fill:'transparent'}),el('circle',{cx:x,cy:y,r:14*KS,fill:'#14284f',stroke:'#fff','stroke-width':2.5*KS}),el('text',{x,y:y+5.5*KS,'text-anchor':'middle','font-size':16*KS,'font-weight':700,fill:'#fff'},ch));
+  g.append(el('circle',{cx:x,cy:y,r:26*KS,fill:'transparent'}),el('circle',{class:'kd',cx:x,cy:y,r:15*KS,fill:'#ffd27a',stroke:'#7a4a22','stroke-width':2.6*KS}),el('text',{x,y:y+6*KS,'text-anchor':'middle','font-size':17*KS,'font-weight':800,fill:'#5b3413'},ch));
   g.onpointerdown=e=>{e.preventDefault();touch();drag={kind,before:JSON.stringify([s.a,s.b,s.side])}};
   g.onkeydown=e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(!d)return;e.preventDefault();touch();
     const was=JSON.stringify([s.a,s.b,s.side]);
@@ -320,77 +360,98 @@ addEventListener('pointermove',e=>{if(!drag)return;if(e.pointerType==='mouse'&&!
   else{s.b=Math.max(1,Math.min(5,Math.round((Y1-p.y)/RH)));s.side=p.x<lineX(s)?'L':'R'}
   if(JSON.stringify([s.a,s.b,s.side])!==was){s.checked=null;draw()}});
 ['pointerup','pointercancel','blur'].forEach(t=>addEventListener(t,endDrag));
-function touch(){const g=LOG[lv];if(g.t0==null)g.t0=Date.now()}
+function touch(){if(running)finish();enter=false;const g=LOG[lv];if(g.t0==null)g.t0=Date.now()}
 
+/* 화면 폭에 맞추어 글자·바구니·손잡이 크기를 정한다 */
 function fit(){if(PAIR)return false;const w=st.getBoundingClientRect().width;if(!w)return false;
   const f=Math.round(Math.min(1.7,Math.max(1,594/w))*20)/20;if(f===FS)return false;FS=f;KS=Math.min(f,1.5);return true}
 addEventListener('resize',()=>{if(fit())draw()});
 
-function draw(){const L=LV[lv],s=S[lv],lx=lineX(s),ly=lineY(s);st.replaceChildren();fit();
-  const FT=PAIR?1.2:Math.min(FS,1.35),hh=26*FS,tickY=Y1+5+11.5*FS,by=tickY+9+hh/2,titleY=by+hh/2+7+13.5*FT,top=L.two?Y0-hh-16:Y0-14;
-  st.setAttribute('viewBox',`0 ${top} 660 ${titleY+8-top}`);
+function fence(x1,y1,x2,y2){return [el('line',{x1,y1,x2,y2,stroke:'#7a4a22','stroke-width':8,'stroke-linecap':'round'}),el('line',{x1,y1,x2,y2,stroke:'#c9965c','stroke-width':3,'stroke-linecap':'round'})]}
+function draw(){const L=LV[lv],s=S[lv],lx=lineX(s),ly=lineY(s);st.replaceChildren();fit();BP={};
+  const aK=Math.min(FS,1.3),hb=34*FS,axisY=Y1+13+9*aK,by=axisY+17*aK+hb*.8,ty=Y0-10-hb/2,top=L.two?ty-hb*.8-6:Y0-26*aK;
+  st.setAttribute('viewBox',`16 ${top} 642 ${by+hb/2+8-top}`);
   const add=(...n)=>st.append(...n);
-  const tint=k=>s.bask[k]==null?'#f7f8fa':s.bask[k]?'#fff0f2':'#edf3fb';
+  const tint=k=>s.bask[k]==null?'#f3f8ea':s.bask[k]?'#ffecef':'#e7f0fc';
   const bl=s.side==='L';
+  const defs=el('defs'),cp=el('clipPath',{id:'bd'});cp.append(el('rect',{x:X0,y:Y0,width:X1-X0,height:Y1-Y0,rx:12}));defs.append(cp);add(defs);
+  const bd=el('g',{'clip-path':'url(#bd)'});
   if(L.two){
-    add(el('rect',{x:bl?lx:X0,y:Y0,width:bl?X1-lx:lx-X0,height:Y1-Y0,fill:tint('O')}),
+    bd.append(el('rect',{x:bl?lx:X0,y:Y0,width:bl?X1-lx:lx-X0,height:Y1-Y0,fill:tint('O')}),
         el('rect',{x:bl?X0:lx,y:Y0,width:bl?lx-X0:X1-lx,height:ly-Y0,fill:tint('T')}),
         el('rect',{x:bl?X0:lx,y:ly,width:bl?lx-X0:X1-lx,height:Y1-ly,fill:tint('B')}));
-  }else add(el('rect',{x:X0,y:Y0,width:lx-X0,height:Y1-Y0,fill:tint('L')}),el('rect',{x:lx,y:Y0,width:X1-lx,height:Y1-Y0,fill:tint('R')}));
-  for(let i=1;i<8;i++)add(el('line',{x1:X0+i*CW,x2:X0+i*CW,y1:Y0,y2:Y1,stroke:'#e2e6ee'}));
-  for(let j=1;j<6;j++)add(el('line',{x1:X0,x2:X1,y1:Y0+j*RH,y2:Y0+j*RH,stroke:'#e2e6ee'}));
-  add(el('rect',{x:X0,y:Y0,width:X1-X0,height:Y1-Y0,fill:'none',stroke:'#8b95a7','stroke-width':1.5}));
-  for(let i=1;i<=8;i++)add(el('text',{x:fx(i),y:tickY,'text-anchor':'middle','font-size':11.5*FS,fill:'#5b6577'},i));
-  for(let j=1;j<=6;j++)add(el('text',{x:X0-8,y:fy(j)+4*FS,'text-anchor':'end','font-size':11.5*FS,fill:'#5b6577'},j));
-  add(el('text',{x:(X0+X1)/2,y:titleY,'text-anchor':'middle','font-size':13.5*FT,fill:'#3d4658'},'크기 (작다 → 크다)'));
-  add(el('text',{x:0,y:0,'text-anchor':'middle','font-size':13.5*FT,fill:'#3d4658',transform:`translate(${14+9*FT} ${(Y0+Y1)/2}) rotate(-90)`},'색 (연하다 → 진하다)'));
-  const done=s.checked==='done',wrong=done?errorsOf(L.fruits,s,L.two):[];
-  L.fruits.forEach(f=>add(fruit(f,wrong.includes(f))));
+  }else bd.append(el('rect',{x:X0,y:Y0,width:lx-X0,height:Y1-Y0,fill:tint('L')}),el('rect',{x:lx,y:Y0,width:X1-lx,height:Y1-Y0,fill:tint('R')}));
+  for(let i=1;i<8;i++)bd.append(el('line',{x1:X0+i*CW,x2:X0+i*CW,y1:Y0,y2:Y1,stroke:'#dbe6c8','stroke-dasharray':'3 5'}));
+  for(let j=1;j<6;j++)bd.append(el('line',{x1:X0,x2:X1,y1:Y0+j*RH,y2:Y0+j*RH,stroke:'#dbe6c8','stroke-dasharray':'3 5'}));
+  add(bd,el('rect',{x:X0,y:Y0,width:X1-X0,height:Y1-Y0,rx:12,fill:'none',stroke:'#b7cd9c','stroke-width':2}));
+  /* 축: 아래는 크기, 왼쪽은 색 */
+  for(let i=1;i<=8;i++)add(el('circle',{cx:fx(i),cy:axisY,r:(3.2+i*.95)*aK,fill:'#e4e8ee',stroke:'#aab3c2'}));
+  for(let j=1;j<=6;j++)add(el('circle',{cx:X0-25,cy:fy(j),r:7*aK,fill:SHADE[j-1],stroke:'#8a4b1f','stroke-width':.9}));
+  add(el('text',{x:X0-25,y:axisY+4.5*aK,'text-anchor':'middle','font-size':12.5*aK,'font-weight':700,fill:'#667085'},'크기'));
+  add(el('text',{x:X0-25,y:Y0-9*aK,'text-anchor':'middle','font-size':12.5*aK,'font-weight':700,fill:'#667085'},'색'));
+  const done=s.checked==='done'&&!running,wrong=done?errorsOf(L.fruits,s,L.two):[];
+  L.fruits.forEach((f,i)=>add(fruit(f,wrong.includes(f),false,i)));
   if(done&&LOG[lv].ok&&L.test&&wrong.length<=L.opt)L.test.forEach(f=>add(fruit(f,s.bask[regionOf(f,s,true)]!==f.s,true)));
-  add(el('line',{x1:lx,x2:lx,y1:Y0-6,y2:Y1+6,stroke:'#14284f','stroke-width':4,'stroke-linecap':'round'}));
-  if(L.two)add(el('line',{x1:bl?X0-6:lx,x2:bl?lx:X1+6,y1:ly,y2:ly,stroke:'#14284f','stroke-width':4,'stroke-linecap':'round'}));
+  add(...fence(lx,Y0-7,lx,Y1+7));
+  if(L.two)add(...fence(bl?X0-7:lx,ly,bl?lx:X1+7,ly));
   /* 바구니: 가로 칸막이가 있는 쪽은 위·아래, 없는 쪽은 아래 */
-  const mid=(a,b)=>Math.max(X0+52*FS,Math.min(X1-52*FS,(a+b)/2));
+  const mid=(a,b)=>Math.max(X0+39*FS,Math.min(X1-39*FS,(a+b)/2));
   if(L.two){const bx=bl?mid(X0,lx):mid(lx,X1),ox=bl?mid(lx,X1):mid(X0,lx);
-    add(basket('T',bx,Y0-8-hh/2),basket('B',bx,by),basket('O',ox,by));
+    add(basket('T',bx,ty),basket('B',bx,by),basket('O',ox,by));
   }else add(basket('L',mid(X0,lx),by),basket('R',mid(lx,X1),by));
   add(knob(lx,L.two&&Math.abs(ly-(Y0+RH*3))<1?Y0+RH*2:Y0+RH*3,'↔','a'));
   if(L.two){const lo=bl?0:s.a,hi=bl?s.a:8,gx=hi-lo>1?Math.round((lo+hi)/2):(lo+hi)/2;add(knob(X0+gx*CW,ly,'↕','b'))}
   ui()}
 
-function ui(){const L=LV[lv],s=S[lv],g=LOG[lv];
+function ui(){const L=LV[lv],s=S[lv];
   document.getElementById('vers').innerHTML=LV.map((v,i)=>`<button class="${i===lv?'on':''} ${LOG[i].ok?'ok':''}" data-v="${i}" aria-label="${v.name}${LOG[i].ok?', 성공':''}">${v.name}<span>${'★'.repeat(v.star)}</span></button>`).join('');
-  document.querySelectorAll('#vers button').forEach(b=>b.onclick=()=>{lv=+b.dataset.v;draw()});
+  document.querySelectorAll('#vers button').forEach(b=>b.onclick=()=>{if(running)finish();lv=+b.dataset.v;enter=true;draw()});
   document.getElementById('bg').innerHTML=L.bg;
   document.getElementById('ask').textContent=L.ask;
-  const chip=k=>s.bask[k]==null?'<i class="rc">바구니 ?</i>':s.bask[k]?'<i class="rc s">단 열매</i>':'<i class="rc b">쓴 열매</i>',big=`크기가 <b>${s.a}</b>보다 크면`,small=`크기가 <b>${s.a}</b> 이하이면`;
-  let rule;if(!L.two)rule=`<span>${small} ${chip('L')}</span><span>${big} ${chip('R')}</span>`;
-  else{const mine=s.side==='L'?small:big,other=s.side==='L'?big:small;
-    rule=`<span>${other} ${chip('O')}</span><span>${mine} 색이 <b>${s.b}</b>보다 진할 때 ${chip('T')} 아닐 때 ${chip('B')}</span>`}
-  document.getElementById('rule').innerHTML='<em>로봇의 규칙</em>'+rule;
-  const fb=document.getElementById('fb'),nx=document.getElementById('next');nx.hidden=true;fb.className='fb';fb.textContent='';
-  if(s.checked){const n=errorsOf(L.fruits,s,L.two).length;
-    if(s.checked==='need'){fb.textContent='바구니를 모두 골라 주세요.';fb.classList.add('warn')}
-    else if(n<=L.opt){fb.classList.add('good');
+  const fb=document.getElementById('fb'),nx=document.getElementById('next'),bot=document.getElementById('bot');
+  let cls='',msg=L.tip;nx.hidden=true;
+  if(running)msg='담는 중…';
+  else if(s.checked){const n=errorsOf(L.fruits,s,L.two).length;
+    if(s.checked==='need'){msg='바구니를 모두 골라 주세요.';cls='warn'}
+    else if(n<=L.opt){cls='good';
       if(L.test){const hit=L.test.filter(f=>s.bask[regionOf(f,s,true)]===f.s).length;
-        fb.textContent=`가장 적게 틀리는 규칙입니다. 새 열매(점선) ${L.test.length}개 중 ${hit}개를 맞혔습니다.`}
-      else fb.textContent='모든 열매를 바르게 담았습니다.';
+        msg=`이보다 덜 틀릴 수는 없어요! 새 열매(점선)도 ${L.test.length}개 중 ${hit}개를 맞혔어요.`}
+      else msg='모두 맞게 담았어요!';
       if(lv<LV.length-1)nx.hidden=false}
-    else{fb.classList.add('bad');fb.textContent=`열매 ${n}개가 잘못 담겼습니다.`+(L.opt>0?' 더 줄일 수 있습니다.':'')}}
-  if(PAIR&&s.checked==='done'&&fb.textContent)document.getElementById('rule').insertAdjacentHTML('beforeend','<span style="flex-basis:100%;color:var(--green);font-weight:600">'+fb.textContent+'</span>');
+    else{cls='bad';msg=`열매 ${n}개를 잘못 담았어요.`+(L.opt>0?' 더 줄일 수 있어요.':'')}}
+  fb.className='bub '+cls;fb.textContent=msg;bot.setAttribute('class','bot '+(cls==='good'?'good':cls==='bad'?'bad':'n'));
   document.getElementById('log').innerHTML=LV.map((v,i)=>{const q=LOG[i],t=q.sec!=null?q.sec:q.t0?Math.round((Date.now()-q.t0)/1000):null;
     return `<tr><td><b>${v.name}</b></td><td>${q.checks}번</td><td>${q.moves}번</td><td>${t==null?'–':t<60?t+'초':Math.floor(t/60)+'분 '+t%60+'초'}</td><td>${q.ok?'<span class="chip g">성공</span>':q.checks?'<span class="chip a">푸는 중</span>':'<span class="chip">시작 전</span>'}</td></tr>`}).join('')}
 
-function check(){const L=LV[lv],s=S[lv],g=LOG[lv];touch();
+/* 담아 보기: 열매가 바구니로 날아가고, 잘못 담긴 열매는 되돌아온다 */
+const still=()=>window.NOANIM||SHOT||!st.animate||matchMedia('(prefers-reduced-motion: reduce)').matches;
+function play(after){const L=LV[lv],s=S[lv],gs=[...st.querySelectorAll('.fr[data-i]')];let end=0;
+  const order=gs.map((g,i)=>i).sort((p,q)=>L.fruits[gs[p].dataset.i].x-L.fruits[gs[q].dataset.i].x);
+  order.forEach((gi,rank)=>{const g=gs[gi],i=+g.dataset.i,f=L.fruits[i],k=regionOf(f,s,L.two),b=BP[k],ok=s.bask[k]===f.s;
+    const dx=b.x-fx(f.x)+(i%5-2)*4,dy=b.y-fy(f.y)-4,delay=rank*42;
+    g.classList.remove('in');
+    g.animate(ok?[{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx}px,${dy}px) scale(.42)`,opacity:1,offset:.82},{transform:`translate(${dx}px,${dy}px) scale(.3)`,opacity:0}]
+               :[{transform:'translate(0,0) scale(1)'},{transform:`translate(${dx*.88}px,${dy*.88}px) scale(.55)`,offset:.42},{transform:`translate(${dx*.7}px,${dy*.7}px) scale(.62)`,offset:.56},{transform:'translate(0,0) scale(1)'}],
+      {duration:ok?520:820,delay,easing:'ease-in-out',fill:'forwards'});
+    end=Math.max(end,delay+820)});
+  timer=setTimeout(after,end+280)}
+function finish(){clearTimeout(timer);running=false;draw()}
+function party(){const bv=document.getElementById('bv');bv.classList.remove('jump');void bv.getBoundingClientRect();bv.classList.add('jump');
+  const sp=document.querySelector('#vers .on span');if(sp)sp.classList.add('pop');
+  const box=document.getElementById('stage');for(let i=0;i<18;i++){const c=document.createElement('i');c.className='cf';c.textContent='★';
+    c.style.left=(4+Math.random()*92)+'%';c.style.animationDelay=(Math.random()*.45)+'s';c.style.fontSize=(14+Math.random()*12)+'px';box.append(c);setTimeout(()=>c.remove(),2000)}}
+function check(){touch();const L=LV[lv],s=S[lv],g=LOG[lv];
   if(regions(L.two).some(k=>s.bask[k]==null)){s.checked='need';draw();return}
-  const n=errorsOf(L.fruits,s,L.two).length;s.checked='done';
-  if(g.ok){draw();return}
-  g.checks++;g.best=g.best==null?n:Math.min(g.best,n);
-  if(n<=L.opt&&!g.ok){g.ok=true;g.sec=Math.round((Date.now()-g.t0)/1000)}
-  draw()}
+  const n=errorsOf(L.fruits,s,L.two).length,win=n<=L.opt;s.checked='done';
+  if(!g.ok){g.checks++;g.best=g.best==null?n:Math.min(g.best,n);if(win){g.ok=true;g.sec=Math.round((Date.now()-g.t0)/1000)}}
+  if(still()){draw();return}
+  running=true;draw();play(()=>{running=false;draw();if(win)party()})}
 document.getElementById('check').onclick=check;
-document.getElementById('reset').onclick=()=>{S[lv]=fresh();draw()};
-document.getElementById('next').onclick=()=>{lv=Math.min(LV.length-1,lv+1);draw()};
+document.getElementById('reset').onclick=()=>{if(running)finish();S[lv]=fresh();enter=true;draw()};
+document.getElementById('next').onclick=()=>{lv=Math.min(LV.length-1,lv+1);enter=true;draw()};
+document.querySelectorAll('.more button').forEach(b=>b.onclick=()=>{const open=b.getAttribute('aria-expanded')==='true';
+  document.querySelectorAll('.more button').forEach(o=>{o.setAttribute('aria-expanded','false');document.getElementById(o.dataset.p).hidden=true});
+  if(!open){b.setAttribute('aria-expanded','true');document.getElementById(b.dataset.p).hidden=false;ui()}});
 /* 요약 기록: xAPI의 문장 구조(행위자·동사·대상·결과) */
 document.getElementById('mk').onclick=()=>{const all=LOG.every(q=>q.ok),sec=LOG.reduce((t,q)=>t+(q.sec||0),0),pad=n=>String(n).padStart(2,'0');
   const now=new Date(),off=-now.getTimezoneOffset(),iso=new Date(now.getTime()+off*6e4).toISOString().slice(0,19)+(off<0?'-':'+')+pad(Math.floor(Math.abs(off)/60))+':'+pad(Math.abs(off)%60);
@@ -404,7 +465,7 @@ document.getElementById('mk').onclick=()=>{const all=LOG.every(q=>q.ok),sec=LOG.
   pre.textContent=JSON.stringify(card,null,2).replace(/\{\s+"난이도"[^}]*\}/g,m=>m.replace(/\s*\n\s*/g,' '))};
 
 /* 원고 그림용: 세 난이도를 푼 상태 */
-function demo(){const now=Date.now();
+function demo(){const now=Date.now();enter=false;
   S[0]={a:4,b:1,side:'R',bask:{L:0,R:1},checked:'done'};LOG[0]={checks:1,moves:3,t0:now-41e3,sec:41,ok:true,best:0};
   S[1]={a:3,b:2,side:'R',bask:{O:0,T:1,B:0},checked:'done'};LOG[1]={checks:3,moves:9,t0:now-132e3,sec:132,ok:true,best:0};
   S[2]={a:5,b:2,side:'L',bask:{O:0,T:1,B:0},checked:'done'};LOG[2]={checks:5,moves:14,t0:now-268e3,sec:268,ok:true,best:LV[2].opt};
@@ -413,6 +474,7 @@ function demo(){const now=Date.now();
 /* 주소 뒤 #/task · #/student · #/bank 로 바로 열기 */
 const h=location.hash.replace(/^#\/?/,'').split('-');const shot=h[0]==='shot';if(shot){document.body.classList.add('shot');h.shift()}
 if(PAIR)document.body.classList.add('pair');
+if(SHOT)enter=false;
 draw();
 show(['student','bank','task'].includes(h[0])?h[0]:'task');
 if(shot&&(h[0]==='task'||PAIR))demo();
