@@ -25,12 +25,12 @@
   .vers button{font:inherit;font-size:14px;padding:5px 13px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--sub);cursor:pointer;white-space:nowrap}
   .vers button span{display:inline-block;color:#d5d9e0;margin-left:4px;letter-spacing:1px}
   .vers button.on{border-color:#f0a400;color:var(--navy);font-weight:700;background:#fff9ea}
-  .vers button.on span,.vers button.ok span{color:#f0a400}
+  .vers button.ok span{color:#f0a400}
   .txt{margin:0 0 4px;font-size:17px} .txt b{font-weight:700;color:#b4530a}
   .ask{margin:0 0 12px;font-size:17px;font-weight:700;color:var(--navy)}
   .stage{position:relative;overflow:hidden;border:2px solid #e3ead6;border-radius:20px;padding:8px 8px 4px;background:#fffef8}
   .stage svg{width:100%;height:auto;display:block;touch-action:pan-y;user-select:none}
-  .kn{cursor:grab;outline:none;touch-action:none} .bk{cursor:pointer;outline:none}
+  .kn{cursor:grab;outline:none} .kn,.kn *{touch-action:none} .bk{cursor:pointer;outline:none}
   .kn:focus-visible .kd,.bk:focus-visible .bb{stroke:#1d6fe0;stroke-width:3.5}
   .bk:hover .bb{filter:brightness(.97)}
   .fr{pointer-events:none;transform-box:fill-box;transform-origin:center}
@@ -106,10 +106,12 @@
   .pair .card{background:#fff}
   .pair section::before{display:block;font-weight:700;color:var(--navy);margin:0 0 10px;font-size:17px}
   .pair #student::before{content:"(가) 학생의 진단 결과 화면"} .pair #task::before{content:"(나) 인터랙티브 문항 ‘비버의 열매 고르기’"}
-  .pair .card h2{font-size:16.5px} .pair .bar,.pair table{font-size:15px} .pair .legend,.pair th,.pair .sub{font-size:14px} .pair td,.pair th{white-space:nowrap}
+  .pair .card h2{font-size:18px} .pair .bar,.pair table{font-size:16.5px} .pair .bar{grid-template-columns:96px 1fr 88px} .pair .legend,.pair th,.pair .sub{font-size:15px} .pair td,.pair th{white-space:nowrap}
   .pair .vers button{font-size:15px} .pair .bub{font-size:16.5px}
   @media (max-width:760px){.grid{grid-template-columns:1fr} header{padding:12px 16px;flex-wrap:wrap} nav{margin-left:0} main{padding:20px 14px 36px} .vers{margin-left:0} .card{overflow-x:auto}}
-  @media (max-width:600px){.stage{padding:6px 2px 2px;border-radius:16px} h1{font-size:22px} .txt,.ask{font-size:16px} .btns{width:100%;margin:0} .btns .fill{flex:1}}
+  @media (max-width:600px){.stage{padding:6px 2px 2px;border-radius:16px} h1{font-size:21px} .bv{width:32px;height:32px} .txt,.ask{font-size:16px} .btns{width:100%;margin:0} .btns .fill{flex:1}
+    header{padding:6px 12px} header b{display:none} main{padding-top:14px} .top{margin-bottom:8px;gap:8px}
+    #student th:nth-child(2),#hist td:nth-child(2){display:none} .card{padding:14px 12px}}
   @media (prefers-reduced-motion:reduce){.fr.in,.fr.wrong,.bot.good,.jump,.vers span.pop{animation:none}}
 </style>
 </head>
@@ -127,14 +129,14 @@
 <!-- 학생 화면 -->
 <section id="student">
   <h1>나의 진단 결과</h1>
-  <p class="lead">김하늘 · 초등학교 5학년</p>
+  <p class="lead">학생 A · 초등학교 5학년</p>
   <div class="grid">
     <div class="card">
       <h2>개념 영역별 위치</h2>
       <div id="bars"></div>
       <div class="legend">
         <span><i style="width:14px;height:14px;border-radius:50%;background:var(--green)"></i>나</span>
-        <span><i style="width:26px;height:10px;border-radius:5px;background:#cfd9ec"></i>같은 학년 학생의 가운데 50%가 속한 구간</span>
+        <span><i style="width:26px;height:10px;border-radius:5px;background:#cfd9ec"></i>같은 학년 학생 가운데 중간 50%의 구간</span>
       </div>
     </div>
     <div class="card">
@@ -150,7 +152,7 @@
     <h2>후속 학습 추천</h2>
     <ul class="next">
       <li><b>한붓그리기</b> <span class="sub">· 그래프 · 지뢰 찾기보다 한 단계 높은 문항</span></li>
-      <li><b>아이템 구매하기 2</b> <span class="sub">· 조건 · 오답이 잦았던 개념의 보충 문항</span></li>
+      <li><b>생산</b> <span class="sub">· 탐색·최적화 · 여러 번 도전해 해결한 개념의 다음 문항</span></li>
     </ul>
   </div>
 </section>
@@ -236,7 +238,7 @@ document.getElementById('bars').innerHTML=concepts.map(([n,v,[a,b]])=>{
   return `<div class="bar"><span>${n}</span><div class="track"><div class="band" style="left:${a}%;width:${b-a}%"></div><div class="dot" style="left:${v}%"></div></div><span class="sub">${pos}</span></div>`}).join('');
 const hist=[['지뢰 찾기','그래프',[0,0,1],true],['게임','탐색·최적화',[0,0,0,0,0,1],true],['격자판 장식하기','규칙 찾기',[1],false],['열매 고르기','규칙 찾기',[0,0,0,0,1],false]];
 function renderHist(){document.getElementById('hist').innerHTML=hist.map((h,i)=>`<tr><td><b>${h[0]}</b></td><td>${h[1]}</td><td><span class="tries">${h[2].map(o=>`<i class="${o?'ok':''}"></i>`).join('')}</span> ${h[2].length}번</td><td><input type="checkbox" class="sw" aria-label="${h[0]} 기록부 반영" data-i="${i}" ${h[3]?'checked':''}></td></tr>`).join('');
-  const n=hist.filter(h=>h[3]).length;document.getElementById('picked').textContent=`고른 기록 ${n}건은 담당 교사의 확인을 거쳐 영재성발달기록부에 실린다.`;
+  const n=hist.filter(h=>h[3]).length;document.getElementById('picked').textContent=n?`고른 기록 ${n}건은 담당 교사의 확인을 거쳐 영재성발달기록부에 실린다.`:'영재성발달기록부에 실을 기록을 고를 수 있다.';
   document.querySelectorAll('#hist .sw').forEach(c=>c.onchange=()=>{hist[c.dataset.i][3]=c.checked;renderHist()})}
 renderHist();
 
@@ -246,7 +248,7 @@ const bank=[
  {t:'지뢰 찾기',skill:'추상화',type:'인터랙티브',p:.44,d:.52,open:'기관 공유',st:4},
  {t:'열매 고르기',skill:'패턴 인식',type:'인터랙티브',p:.63,d:.45,open:'공개 연습',st:4},
  {t:'최대공약수',skill:'알고리즘 설계',type:'코딩',p:.58,d:.44,open:'공개 연습',st:4},
- {t:'예시 문항 B-2',skill:'추상화',type:'지필',p:0,d:0,open:'기관 공유',st:4},
+ {t:'예시 문항 B-2',skill:'추상화',type:'지필',p:.07,d:.05,open:'기관 공유',st:4},
  {t:'2027 선발 문항 A-3',skill:'추상화',type:'지필',p:null,d:null,open:'선발용',st:2},
 ];
 let sel=1;
@@ -267,7 +269,7 @@ function renderDetail(any){
   if(!any){document.getElementById('detail').innerHTML='';return}
   const b=bank[sel],lock=b.open==='선발용';
   const flow=steps.map((s,i)=>`<span class="${i<b.st?'done':i===b.st?'now':''}">${s}</span>`).join('→');
-  const body=lock?`<p class="sub" style="margin:0">선발용 문항은 내용을 볼 수 없다. 기관이 정한 시험 시간에 응시 화면에서만 열리고, 열람 기록이 남는다.</p>`
+  const body=lock?`<p class="sub" style="margin:0">선발용 문항은 선발 담당자만 열 수 있고, 열람 기록이 남는다.</p>`
     :`<div class="kv"><span>측정 요소</span><span>${b.skill}</span><span>채점</span><span>${b.type==='지필'?'채점 기준에 따라 교사 채점':b.type==='코딩'?'자동 채점':'자동 채점, 조작 과정 기록'}</span><span>문항 통계</span><span>정답률 ${fmt(b.p)} · 변별도 ${fmt(b.d)}${b.d<.2?' <span class="chip r">검토 필요</span>':''}</span></div>
       <button class="btn sm" id="var">변형 문항 초안 만들기</button><div id="out"></div>`;
   document.getElementById('detail').innerHTML=`<h2>${b.t}</h2><div class="flow">${flow}</div>${body}`;
@@ -285,22 +287,22 @@ const LV=[
  {name:'쉬움',star:1,pt:10,two:false,
   bg:'웃는 열매는 달고, 찡그린 열매는 쓰다. 로봇은 맛을 볼 수 없어서 열매의 <b>크기</b>만 보고 나누어 담는다.',
   ask:'칸막이를 어디에 놓아야 모두 맞게 담을 수 있을까?',
-  tip:'칸막이는 끌어서 옮기고, 바구니는 눌러서 골라요.',
+  tip:'칸막이를 끌어서 옮긴 다음 ‘담아 보기’를 눌러요.',
   fruits:[FR(1,2,0),FR(2,5,0),FR(2,3,0),FR(3,1,0),FR(4,4,0),FR(4,6,0),FR(5,2,1),FR(6,5,1),FR(6,3,1),FR(7,1,1),FR(8,4,1)]},
  {name:'보통',star:2,pt:20,two:true,
   bg:'이번에는 크기만 보아서는 나눌 수 없다. 그래서 로봇은 열매의 <b>색</b>도 보기로 했다.',
   ask:'칸막이 두 개를 어떻게 놓아야 할까?',
-  tip:'가로 칸막이는 왼쪽이나 오른쪽으로 넘길 수 있어요.',
+  tip:'이번에는 바구니도 눌러서 골라요. 가로 칸막이는 색을 나눠요.',
   fruits:[FR(1,5,0),FR(2,2,0),FR(2,6,0),FR(3,4,0),FR(3,1,0),FR(4,1,0),FR(5,2,0),FR(6,1,0),FR(7,2,0),FR(8,1,0),FR(4,4,1),FR(4,6,1),FR(5,3,1),FR(5,5,1),FR(6,4,1),FR(7,6,1),FR(7,3,1),FR(8,5,1)]},
  {name:'어려움',star:3,pt:30,two:true,
-  bg:'새로 따 온 열매에는 <b>별난 열매</b>가 섞여 있어서, 모두 맞게 담을 수는 없다.',
+  bg:'이번 열매에는 <b>별난 열매</b>가 섞여 있어서, 모두 맞게 담을 수는 없다.',
   ask:'잘못 담기는 열매가 가장 적은 규칙은 무엇일까?',
-  tip:'가장 덜 틀리게 담아 봐요.',
+  tip:'가로 칸막이를 옆으로 끌면 반대쪽으로 넘어가요.',
   fruits:[FR(8,5,0),FR(8,2,0),FR(7,6,0),FR(6,4,0),FR(6,1,0),FR(5,1,0),FR(4,2,0),FR(3,1,0),FR(2,2,0),FR(1,1,0),FR(5,4,1),FR(5,6,1),FR(4,3,1),FR(4,5,1),FR(3,4,1),FR(2,6,1),FR(2,3,1),FR(1,5,1),FR(7,3,1),FR(3,6,0),FR(1,3,0)],
   test:[FR(4,6,1),FR(1,4,1),FR(3,2,0),FR(7,4,1),FR(5,5,1),FR(8,1,0),FR(6,6,0),FR(2,5,1)]}
 ];
-const fresh=()=>({a:1,b:1,side:'R',bask:{},checked:null});
-let lv=0,S=LV.map(fresh),LOG=LV.map(()=>({checks:0,moves:0,t0:null,sec:null,ok:false,best:null}));
+const fresh=i=>({a:1,b:1,side:'R',bask:i===0?{L:0,R:1}:{},checked:null});
+let lv=0,S=LV.map((v,i)=>fresh(i)),LOG=LV.map(()=>({checks:0,moves:0,t0:null,sec:null,ok:false,best:null}));
 let running=false,timer=0,enter=true,BP={};
 const el=(n,a={},t)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;return e};
 const fx=x=>X0+(x-.5)*CW,fy=y=>Y1-(y-.5)*RH,lineX=s=>X0+s.a*CW,lineY=s=>Y1-s.b*RH;
@@ -321,8 +323,8 @@ function face(g,cx,cy,r,sweet){const ink='#3a1c0c',ex=r*.34,ey=cy-r*.16,my=cy+r*
 function fruit(f,wrong,isNew,i){const g=el('g',{class:'fr'+(wrong?' wrong':'')+(enter&&!isNew?' in':'')}),r=11.5+f.x*1.45,cx=fx(f.x),cy=fy(f.y);
   if(i!=null){g.dataset.i=i;if(enter)g.style.animationDelay=(i*22)+'ms'}
   g.append(el('ellipse',{cx,cy:cy+r*.96,rx:r*.72,ry:r*.16,fill:'rgba(70,90,40,.14)'}));
-  if(wrong)g.append(el('circle',{cx,cy,r:r+6,fill:'none',stroke:'#d92d20','stroke-width':3}),el('text',{x:cx+r+2,y:cy-r+2,'font-size':15*FS,'font-weight':800,fill:'#d92d20'},'×'));
-  if(isNew)g.append(el('circle',{cx,cy,r:r+5,fill:'none',stroke:'#14284f','stroke-width':2,'stroke-dasharray':'4 3'}));
+  if(wrong)g.append(el('circle',{cx,cy,r:r+4,fill:'none',stroke:'#d92d20','stroke-width':2.6}),el('text',{x:cx+r+2,y:cy-r+2,'font-size':15*FS,'font-weight':800,fill:'#d92d20'},'×'));
+  if(isNew)g.append(el('circle',{cx,cy,r:r+3.5,fill:'none',stroke:'#14284f','stroke-width':2,'stroke-dasharray':'4 3'}));
   if(f.s)g.append(el('path',{d:`M${cx} ${cy-r+1} q7 -11 15 -7 q-3 9 -15 7z`,fill:'#3c9a4a'}));
   g.append(el('circle',{cx,cy,r,fill:SHADE[f.y-1],stroke:'#8a4b1f','stroke-width':1.4}));
   face(g,cx,cy,r,f.s);return g}
@@ -387,8 +389,8 @@ function draw(){const L=LV[lv],s=S[lv],lx=lineX(s),ly=lineY(s);st.replaceChildre
   /* 축: 아래는 크기, 왼쪽은 색 */
   for(let i=1;i<=8;i++)add(el('circle',{cx:fx(i),cy:axisY,r:(3.2+i*.95)*aK,fill:'#e4e8ee',stroke:'#aab3c2'}));
   for(let j=1;j<=6;j++)add(el('circle',{cx:X0-25,cy:fy(j),r:7*aK,fill:SHADE[j-1],stroke:'#8a4b1f','stroke-width':.9}));
-  add(el('text',{x:X0-25,y:axisY+4.5*aK,'text-anchor':'middle','font-size':12.5*aK,'font-weight':700,fill:'#667085'},'크기'));
-  add(el('text',{x:X0-25,y:Y0-9*aK,'text-anchor':'middle','font-size':12.5*aK,'font-weight':700,fill:'#667085'},'색'));
+  add(el('text',{x:X0-25,y:axisY+4.5*aK,'text-anchor':'middle','font-size':12.5*Math.min(FS,1.6),'font-weight':700,fill:'#667085'},'크기'));
+  add(el('text',{x:X0-25,y:Y0-9*aK,'text-anchor':'middle','font-size':12.5*Math.min(FS,1.6),'font-weight':700,fill:'#667085'},'색'));
   const done=s.checked==='done'&&!running,wrong=done?errorsOf(L.fruits,s,L.two):[];
   L.fruits.forEach((f,i)=>add(fruit(f,wrong.includes(f),false,i)));
   if(done&&LOG[lv].ok&&L.test&&wrong.length<=L.opt)L.test.forEach(f=>add(fruit(f,s.bask[regionOf(f,s,true)]!==f.s,true)));
@@ -415,9 +417,9 @@ function ui(){const L=LV[lv],s=S[lv];
     if(s.checked==='need'){msg='바구니를 모두 골라 주세요.';cls='warn'}
     else if(n<=L.opt){cls='good';
       if(L.test){const hit=L.test.filter(f=>s.bask[regionOf(f,s,true)]===f.s).length;
-        msg=`이보다 덜 틀릴 수는 없어요! 새 열매(점선)도 ${L.test.length}개 중 ${hit}개를 맞혔어요.`}
+        msg=`가장 덜 틀리게 담았어요! 처음 보는 열매 ${L.test.length}개(점선) 중 ${hit}개도 맞혔어요.`}
       else msg='모두 맞게 담았어요!';
-      if(lv<LV.length-1)nx.hidden=false}
+      nx.hidden=false;nx.textContent=lv<LV.length-1?'다음 ▶':'풀이 기록 보기'}
     else{cls='bad';msg=`열매 ${n}개를 잘못 담았어요.`+(L.opt>0?' 더 줄일 수 있어요.':'')}}
   fb.className='bub '+cls;fb.textContent=msg;bot.setAttribute('class','bot '+(cls==='good'?'good':cls==='bad'?'bad':'n'));
   document.getElementById('log').innerHTML=LV.map((v,i)=>{const q=LOG[i],t=q.sec!=null?q.sec:q.t0?Math.round((Date.now()-q.t0)/1000):null;
@@ -434,32 +436,34 @@ function play(after){const L=LV[lv],s=S[lv],gs=[...st.querySelectorAll('.fr[data
                :[{transform:'translate(0,0) scale(1)'},{transform:`translate(${dx*.88}px,${dy*.88}px) scale(.55)`,offset:.42},{transform:`translate(${dx*.7}px,${dy*.7}px) scale(.62)`,offset:.56},{transform:'translate(0,0) scale(1)'}],
       {duration:ok?520:820,delay,easing:'ease-in-out',fill:'forwards'});
     end=Math.max(end,delay+820)});
-  timer=setTimeout(after,end+280)}
+  timer=setTimeout(after,end+90)}
 function finish(){clearTimeout(timer);running=false;draw()}
 function party(){const bv=document.getElementById('bv');bv.classList.remove('jump');void bv.getBoundingClientRect();bv.classList.add('jump');
   const sp=document.querySelector('#vers .on span');if(sp)sp.classList.add('pop');
   const box=document.getElementById('stage');for(let i=0;i<18;i++){const c=document.createElement('i');c.className='cf';c.textContent='★';
     c.style.left=(4+Math.random()*92)+'%';c.style.animationDelay=(Math.random()*.45)+'s';c.style.fontSize=(14+Math.random()*12)+'px';box.append(c);setTimeout(()=>c.remove(),2000)}}
-function check(){touch();const L=LV[lv],s=S[lv],g=LOG[lv];
+function check(){if(running){finish();return}touch();const L=LV[lv],s=S[lv],g=LOG[lv];
   if(regions(L.two).some(k=>s.bask[k]==null)){s.checked='need';draw();return}
   const n=errorsOf(L.fruits,s,L.two).length,win=n<=L.opt;s.checked='done';
   if(!g.ok){g.checks++;g.best=g.best==null?n:Math.min(g.best,n);if(win){g.ok=true;g.sec=Math.round((Date.now()-g.t0)/1000)}}
   if(still()){draw();return}
   running=true;draw();play(()=>{running=false;draw();if(win)party()})}
 document.getElementById('check').onclick=check;
-document.getElementById('reset').onclick=()=>{if(running)finish();S[lv]=fresh();enter=true;draw()};
-document.getElementById('next').onclick=()=>{lv=Math.min(LV.length-1,lv+1);enter=true;draw()};
+document.getElementById('reset').onclick=()=>{if(running)finish();S[lv]=fresh(lv);enter=true;draw()};
+document.getElementById('next').onclick=()=>{if(lv<LV.length-1){lv++;enter=true;draw();document.getElementById('check').focus();return}
+  const b=document.querySelector('.more button[data-p="rec"]');if(b.getAttribute('aria-expanded')!=='true')b.click();document.getElementById('mk').click();
+  document.getElementById('rec').scrollIntoView({behavior:'smooth',block:'nearest'})};
 document.querySelectorAll('.more button').forEach(b=>b.onclick=()=>{const open=b.getAttribute('aria-expanded')==='true';
   document.querySelectorAll('.more button').forEach(o=>{o.setAttribute('aria-expanded','false');document.getElementById(o.dataset.p).hidden=true});
   if(!open){b.setAttribute('aria-expanded','true');document.getElementById(b.dataset.p).hidden=false;ui()}});
 /* 요약 기록: xAPI의 문장 구조(행위자·동사·대상·결과) */
 document.getElementById('mk').onclick=()=>{const all=LOG.every(q=>q.ok),sec=LOG.reduce((t,q)=>t+(q.sec||0),0),pad=n=>String(n).padStart(2,'0');
   const now=new Date(),off=-now.getTimezoneOffset(),iso=new Date(now.getTime()+off*6e4).toISOString().slice(0,19)+(off<0?'-':'+')+pad(Math.floor(Math.abs(off)/60))+':'+pad(Math.abs(off)%60);
-  const card={actor:{account:{homePage:'https://ged.kedi.re.kr',name:'가명 처리한 통합 학생 ID'}},
+  const card={actor:{account:{homePage:'https://ged.example',name:'가명 처리한 통합 학생 ID'}},
     verb:{id:'http://adlnet.gov/expapi/verbs/'+(all?'completed':'attempted'),display:{ko:all?'완료함':'시도함'}},
-    object:{id:location.origin+location.pathname+'#/task',definition:{name:{ko:'비버의 열매 고르기'}}},
+    object:{id:'https://ged.example/items/fruit-sorting',definition:{name:{ko:'비버의 열매 고르기'}}},
     result:{completion:all,score:{raw:LV.reduce((t,v,i)=>t+(LOG[i].ok?v.pt:0),0),max:60},duration:'PT'+Math.floor(sec/60)+'M'+sec%60+'S',
-      extensions:{'https://ged.kedi.re.kr/xapi/ext/levels':LV.map((v,i)=>({난이도:v.name,성공:LOG[i].ok,검사_횟수:LOG[i].checks,조작_횟수:LOG[i].moves,소요_시간_초:LOG[i].sec}))}},
+      extensions:{'https://ged.example/xapi/levels':LV.map((v,i)=>({난이도:v.name,성공:LOG[i].ok,검사_횟수:LOG[i].checks,조작_횟수:LOG[i].moves,소요_시간_초:LOG[i].sec}))}},
     timestamp:iso};
   const pre=document.getElementById('json');pre.hidden=false;
   pre.textContent=JSON.stringify(card,null,2).replace(/\{\s+"난이도"[^}]*\}/g,m=>m.replace(/\s*\n\s*/g,' '))};
@@ -478,6 +482,7 @@ if(SHOT)enter=false;
 draw();
 show(['student','bank','task'].includes(h[0])?h[0]:'task');
 if(shot&&(h[0]==='task'||PAIR))demo();
+addEventListener('hashchange',()=>{const t=location.hash.replace(/^#\/?/,'');if(['student','bank','task'].includes(t)){show(t);if(t==='task')draw()}});
 </script>
 </body>
 </html>
